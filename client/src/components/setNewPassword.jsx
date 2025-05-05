@@ -38,28 +38,28 @@ const SetNewPassword = () => {
             />
 
             {/* Form container */}
-            <div className="relative z-10 bg-white rounded-lg shadow-xl p-12 w-full max-w-lg">
-                <h1 className="text-5xl font-semibold text-center text-gray-800 mb-2">
+            <div className="relative z-10 bg-white rounded-lg shadow-xl p-10 w-full max-w-lg">
+                <h1 className="text-4xl font-semibold text-center text-gray-800 mb-2">
                     Set New Password
                 </h1>
-                <p className="text-center text-gray-600">
+                <p className="text-center text-gray-600 text-sm">
                     Your new password must be different
                 </p>
-                <p className="text-center text-gray-600 mb-6">
+                <p className="text-center text-gray-600 mb-5 text-sm">
                     from previously used passwords.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Password Field */}
                     <div className="mb-2">
-                        <label className="block text-gray-700 mb-2 text-[18px]">Password</label>
+                        <label className="block text-gray-700 mb-1">Password</label>
                         <div className="relative">
                             <input
                                 type={showPassword ? "text" : "password"}
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm"
                                 placeholder="Password"
                                 required
                             />
@@ -73,18 +73,18 @@ const SetNewPassword = () => {
                         </div>
                     </div>
 
-                    <p className="text-sm text-gray-500">Must be at least 8 Characters</p>
+                    <p className="text-sm text-gray-500 mb-3">Must be at least 8 Characters</p>
 
                     {/* Confirm Password Field */}
                     <div>
-                        <label className="block text-gray-700 mb-2 text-[18px]">Confirm Password</label>
+                        <label className="block text-gray-700 mb-2">Confirm Password</label>
                         <div className="relative">
                             <input
                                 type={showPassword ? "text" : "password"}
                                 name="confirmpassword"
                                 value={formData.confirmpassword}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm"
                                 placeholder="Confirm Password"
                                 required
                             />

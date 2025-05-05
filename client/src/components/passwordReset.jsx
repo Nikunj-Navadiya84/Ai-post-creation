@@ -17,14 +17,14 @@ const PasswordReset = () => {
             />
 
             {/* Form container */}
-            <div className="relative z-10 bg-white rounded-lg shadow-xl p-12 w-full max-w-lg">
-                <h1 className="text-5xl font-semibold text-center text-gray-800 mb-2">
+            <div className="relative z-10 bg-white rounded-lg shadow-xl p-10 w-full max-w-lg">
+                <h1 className="text-4xl font-semibold text-center text-gray-800 mb-2">
                     Password Reset
                 </h1>
-                <p className="text-center text-gray-600">
+                <p className="text-center text-gray-600 text-sm">
                     Your password has been successfully reset.
                 </p>
-                <p className="text-center text-gray-600 mb-6">
+                <p className="text-center text-gray-600 mb-5 text-sm">
                     click continue to login with your updates password.
                 </p>
 

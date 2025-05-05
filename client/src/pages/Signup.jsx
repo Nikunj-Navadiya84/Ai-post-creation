@@ -47,50 +47,50 @@ const SignUp = () => {
             />
 
             {/* Signup Form */}
-            <div className="relative z-10 bg-white rounded-lg shadow-xl p-12 w-full max-w-lg">
-                <h1 className="text-5xl font-semibold text-center text-gray-800 mb-2">
+            <div className="relative z-10 bg-white rounded-lg shadow-xl p-10 w-full max-w-lg">
+                <h1 className="text-4xl font-semibold text-center text-gray-800 mb-2">
                     Create Account
                 </h1>
-                <p className="text-center text-gray-600 mb-6">
+                <p className="text-center text-gray-600 mb-5 text-sm">
                     Please enter your details to sign up.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                        <label className="block text-gray-700 mb-2 text-[18px]">Name</label>
+                    <div className="mb-3">
+                        <label className="block text-gray-700 mb-1">Name</label>
                         <input
                             type="text"
                             name="username"
                             value={formData.username}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 "
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm"
                             placeholder="Username"
                             required
                         />
                     </div>
 
-                    <div>
-                        <label className="block text-gray-700 mb-2 text-[18px]">Email</label>
+                    <div className="mb-3">
+                        <label className="block text-gray-700 mb-1">Email</label>
                         <input
                             type="email"
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm"
                             placeholder="Email"
                             required
                         />
                     </div>
 
-                    <div>
-                        <label className="block text-gray-700 mb-2 text-[18px]">Password</label>
+                    <div className="mb-3">
+                        <label className="block text-gray-700 mb-1">Password</label>
                         <div className="relative">
                             <input
                                 type={showPassword ? "text" : "password"}
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm"
                                 placeholder="Password"
                                 required
                             />
@@ -104,15 +104,15 @@ const SignUp = () => {
                         </div>
                     </div>
 
-                    <div>
-                        <label className="block text-gray-700 mb-2 text-[18px]">Confirm Password</label>
+                    <div className="mb-3">
+                        <label className="block text-gray-700 mb-1">Confirm Password</label>
                         <div className="relative">
                             <input
                                 type={showPassword ? "text" : "password"}
                                 name="confirmPassword"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm"
                                 placeholder="Confirm Password"
                                 required
                             />
@@ -145,12 +145,12 @@ const SignUp = () => {
 
                     <button
                         type="submit"
-                        className="w-full bg-[#ff9a9e] text-white py-2 rounded-md hover:bg-[#ff8589] transition-colors duration-200 cursor-pointer"
+                        className="w-full bg-[#ff9a9e] text-white py-2 rounded-md hover:bg-[#ff8589] transition-colors duration-200 cursor-pointer mb-3"
                     >
                         Sign Up
                     </button>
 
-                    <div className="relative flex items-center justify-center text-sm text-gray-500">
+                    <div className="relative flex items-center justify-center text-sm text-gray-500 mb-3">
                         <div className="border-t border-gray-300 flex-grow"></div>
                         <span className="px-4">or continue with</span>
                         <div className="border-t border-gray-300 flex-grow"></div>
@@ -158,9 +158,9 @@ const SignUp = () => {
 
                     <button
                         type="button"
-                        className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2 hover:bg-gray-50 transition-colors duration-200 cursor-pointer text-[18px]"
+                        className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2 hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
                     >
-                        <FcGoogle size={25} />
+                        <FcGoogle size={20} />
                         <span>Sign up with Google</span>
                     </button>
                 </form>

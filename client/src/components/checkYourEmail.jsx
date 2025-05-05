@@ -16,14 +16,14 @@ const CheckYourEmail = () => {
             />
 
             {/* Forgot Password Form */}
-            <div className="relative z-10 bg-white rounded-lg shadow-xl p-12 w-full max-w-lg">
-                <h1 className="text-5xl font-semibold text-center text-gray-800 mb-2">
+            <div className="relative z-10 bg-white rounded-lg shadow-xl p-10 w-full max-w-lg">
+                <h1 className="text-4xl font-semibold text-center text-gray-800 mb-2">
                     Check Your Email
                 </h1>
-                <p className="text-center text-gray-600">
+                <p className="text-center text-gray-600 text-sm">
                     We sent a psssword reset link to
                 </p>
-                <p className="text-center text-gray-600 mb-6">abc@gmail.com</p>
+                <p className="text-center text-gray-600 mb-5 text-lg">abc@gmail.com</p>
 
                 <Link to={'/setNewPassword'}>
                     <button
