@@ -4,3 +4,9 @@
 * {
     font-family: Inter;
 }
+
+.active {
+    background-color: #ffb6b9;
+    color: white;
+    border-radius: 5px;
+}

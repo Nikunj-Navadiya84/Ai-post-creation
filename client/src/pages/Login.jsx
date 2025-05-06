@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -24,6 +26,7 @@ const Login = () => {
     e.preventDefault();
     console.log(formData);
     // Add login logic here
+    navigate("/home"); // Navigate to home page after login
   };
 
   return (

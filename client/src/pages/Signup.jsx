@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
 
 const SignUp = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -31,8 +33,7 @@ const SignUp = () => {
             alert("Passwords do not match!");
             return;
         }
-
-        // Add sign-up logic here
+        navigate("/home");
     };
 
     return (
