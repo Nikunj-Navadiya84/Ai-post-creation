@@ -102,19 +102,21 @@ const Home = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center z-50">
-          <div className="relative z-10 bg-white rounded-lg shadow-xl  w-full max-w-md">
+        <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center z-50 px-2">
+          <div className="relative z-10 bg-white rounded-lg shadow-xl w-11/12 sm:w-full max-w-md">
 
             {/* Close Button */}
-            <button
+            <div className='flex items-center justify-center'>
+           <button
               onClick={handleCloseModal}
-              className="absolute top-3 right-4 bg-white rounded-full w-7 h-7 flex items-center justify-center text-2xl font-bold text-red-400 cursor-pointer"
+              className="absolute top-3 right-4 bg-white rounded-full w-7 h-7 text-lg font-bold text-red-400 cursor-pointer"
             >
               &times;
             </button>
-
+            </div>
+           
             {/* Header */}
-            <div className="bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] rounded-t-md py-4 mb-6">
+            <div className="bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] rounded-t-md py-4">
               <h1 className="text-2xl font-semibold text-white text-center">
                 Collect Information
               </h1>
@@ -124,25 +126,25 @@ const Home = () => {
             <form onSubmit={handleSubmit} className='p-6'>
 
               {/* Business Name */}
-              <div className="mb-4">
-                <label className="block text-gray-700 mb-1">Business Name</label>
+              <div className="mb-2">
+                <label className="block text-gray-700 mb-1 text-sm">Business Name</label>
                 <input
                   type="text"
                   value={newBizName}
                   onChange={(e) => setNewBizName(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm"
                   placeholder="Name"
                   required
                 />
               </div>
 
               {/* Business Address */}
-              <div className="mb-4">
-                <label className="block text-gray-700 mb-1">Business Address</label>
+              <div className="mb-2">
+                <label className="block text-gray-700 mb-1 text-sm">Business Address</label>
                 <textarea
                   value={newBizAddress}
                   onChange={(e) => setNewBizAddress(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm"
                   placeholder="Address"
                   required
                 />
@@ -150,8 +152,8 @@ const Home = () => {
 
               {/* Logo / Banner Image */}
               <div className="mb-6">
-                <label className="block text-gray-700 mb-1">Logo / Banner Image</label>
-                <div className="border border-gray-300 border-dashed rounded-md p-6 text-center">
+                <label className="block text-gray-700 mb-1 text-sm">Logo / Banner Image</label>
+                <div className="border border-gray-300 border-dashed rounded-md p-6 text-center text-sm">
                   <div className="flex flex-col items-center">
                     <img
                       src={assets.upload}

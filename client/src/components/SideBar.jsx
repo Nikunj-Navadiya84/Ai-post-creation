@@ -47,7 +47,7 @@ const SideBar = () => {
                             className="text-white p-3 rounded-full shadow-md"
                             style={{ backgroundColor: '#FF6666' }}
                         >
-                            <img src={assets.group} alt="" className="w-5 h-5" />
+                            <img src={assets.group1} alt="" className="w-5 h-5" />
                         </button>
                     </Link>
 
@@ -56,7 +56,7 @@ const SideBar = () => {
                             className="text-white p-3 rounded-full shadow-md"
                             style={{ backgroundColor: '#FF6666' }}
                         >
-                            <img src={assets.group1} alt="" className="w-5 h-5" />
+                            <img src={assets.group} alt="" className="w-5 h-5" />
                         </button>
                     </Link>
 
