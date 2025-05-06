@@ -33,7 +33,7 @@ const SignUp = () => {
             alert("Passwords do not match!");
             return;
         }
-        navigate("/home");
+        navigate("/collectInformation");
     };
 
     return (

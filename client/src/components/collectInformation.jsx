@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
 
 const CollectInformation = () => {
     const [selectedImage, setSelectedImage] = useState(null);
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        navigate("/home");
         // handle form submission logic here
     };
 
