@@ -1,23 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import { FiPlus, FiMoreHorizontal } from 'react-icons/fi';
+import assets from '../assets/assets';
 
-// Placeholder images (replace with your assets)
-const pizzaLogo = 'https://img.icons8.com/color/96/000000/pizza.png';
-const kanoLogo = 'https://img.icons8.com/color/96/000000/sofa.png';
-const pizzaPost = 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80';
-const energyPost = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80';
-const pizzaPost2 = 'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&w=400&q=80';
-const businessPost = 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80';
+
+const pizzaPost = ' https://images.pexels.com/photos/3802508/pexels-photo-3802508.jpeg?auto=compress&cs=tinysrgb&w=600';
+const energyPost = 'https://images.pexels.com/photos/253096/pexels-photo-253096.jpeg?auto=compress&cs=tinysrgb&w=600';
+const pizzaPost2 = 'https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=600';
+const businessPost = 'https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=600';
 
 const businesses = [
-  { id: 1, name: 'Pizzeria Hot & Tasty', logo: pizzaLogo },
-  { id: 2, name: 'Kano Interiors & Furniture', logo: kanoLogo },
-  { id: 3, name: 'Pizzeria Hot & Tasty', logo: pizzaLogo },
-  { id: 4, name: 'Kano Interiors & Furniture', logo: kanoLogo },
+  { id: 1, name: 'Pizzeria Hot & Tasty', logo: assets.logo2 },
+  { id: 2, name: 'Kano Interiors & Furniture', logo: assets.logo1 },
+  { id: 3, name: 'Pizzeria Hot & Tasty', logo: assets.logo2 },
+  { id: 4, name: 'Kano Interiors & Furniture', logo: assets.logo1 },
 ];
 
-const posts = [
+const initialPosts = [
   {
     id: 1,
     image: pizzaPost,
@@ -30,7 +29,7 @@ const posts = [
     image: energyPost,
     title: 'Untitled Post',
     size: '1584 × 396 px Linkedin banner',
-    favorite: true,
+    favorite: false,
   },
   {
     id: 3,
@@ -44,59 +43,121 @@ const posts = [
     image: businessPost,
     title: 'Untitled Post',
     size: '1584 × 396 px Linkedin banner',
-    favorite: true,
+    favorite: false,
   },
 ];
 
 const Home = () => {
+  const [posts, setPosts] = useState(initialPosts);
+
+  const toggleFavorite = (id) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === id ? { ...post, favorite: !post.favorite } : post
+      )
+    );
+  };
+
   return (
-    <div className="min-h-screen bg-white px-4 py-8 md:px-12 lg:px-24">
-      {/* Explore Business Posts */}
-      <div className="flex items-center justify-between mb-2">
-        <h2 className="text-3xl font-bold">Explore Business Posts</h2>
-        <button className="bg-[#ff9a9e] text-white px-5 py-2 rounded-md font-semibold hover:bg-[#ff8589] transition-colors">Add Business</button>
+    <div className="min-h-screen bg-white px-4 py-8 sm:px-6 md:px-10 lg:px-20">
+
+      {/* Business Section (unchanged) */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
+        <div>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-2">Explore Business Posts</h2>
+          <p className="text-gray-600  max-w-2xl mb-5">
+            See how businesses turn ideas into engaging posts. Each one features unique branding elements like logos, names, and tailored visuals—all powered by AI.
+          </p>
+        </div>
+        <button className="bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white px-5 py-2 rounded-md font-semibold  transition-colors mb-5 cursor-pointer">
+          Add Business
+        </button>
       </div>
-      <p className="text-gray-600 mb-6 max-w-2xl">
-        See how businesses turn ideas into engaging posts. Each one features unique branding elements like logos, names, and tailored visuals—all powered by AI.
-      </p>
-      <div className="flex gap-6 mb-12 overflow-x-auto pb-2">
+
+      {/* Business Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4 gap-6 mb-10">
+
         {businesses.map((biz) => (
-          <div key={biz.id} className="bg-gray-50 rounded-xl shadow border flex items-center gap-4 px-8 py-6 min-w-[270px] relative">
-            <img src={biz.logo} alt={biz.name} className="w-16 h-16 object-contain rounded-full border" />
-            <span className="font-semibold text-lg text-gray-800">{biz.name}</span>
-            <button className="absolute top-3 right-3 bg-[#ff9a9e] text-white rounded-full p-1 hover:bg-[#ff8589]">
+          <div
+            key={biz.id}
+            className="rounded-xl shadow border border-gray-200 flex items-center gap-5 p-5 relative"
+            style={{
+              backgroundImage: `url(${assets.bg})`,
+              backgroundSize: 'cover',
+            }}
+          >
+            {biz.logo && (
+              <img
+                src={biz.logo}
+                alt={biz.name}
+                className="w-20  object-cover"
+              />
+            )}
+            <span className="font-semibold text-base sm:text-lg text-gray-800">
+              {biz.name}
+            </span>
+            <button className="absolute top-3 right-3 bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white rounded-md p-1  cursor-pointer">
               <FiPlus size={18} />
             </button>
+
           </div>
         ))}
       </div>
 
+
       {/* Recently Created Posts */}
-      <h2 className="text-3xl font-bold mb-2">Recently Created Posts</h2>
-      <p className="text-gray-600 mb-6 max-w-2xl">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-2">Recently Created Posts</h2>
+
+      <p className="text-gray-600 mb-5 max-w-2xl">
         Here are your latest AI-generated posts, ready to download and share across your social media channels. Stay consistent and keep your audience engaged effortlessly.
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
         {posts.map((post) => (
-          <div key={post.id} className="bg-white rounded-xl shadow p-4 relative flex flex-col">
-            <input type="checkbox" className="absolute top-3 left-3 w-4 h-4 accent-[#ff9a9e]" />
-            <button className="absolute top-3 right-10 text-yellow-400">
-              {post.favorite ? <FaStar size={22} /> : <FaRegStar size={22} />}
-            </button>
-            <button className="absolute top-3 right-3 text-gray-400 hover:text-gray-700">
-              <FiMoreHorizontal size={22} />
-            </button>
-            <img src={post.image} alt={post.title} className="rounded-md h-44 object-cover mb-3" />
-            <div className="flex-1">
-              <div className="font-semibold text-md text-gray-800 mb-1">{post.title}</div>
-              <div className="text-xs text-gray-500 mb-2">{post.size}</div>
+          <div key={post.id}>
+            <div className="p-5 relative flex flex-col border border-gray-200 rounded-md bg-[#F2F2F2]">
+
+              <label className="relative cursor-pointer w-5 h-5">
+                <input type="checkbox" className="peer absolute opacity-0 w-5 h-5 z-10 cursor-pointer bg-white" />
+
+                {/* Checkbox box */}
+                <span className="w-5 h-5 block rounded border border-gray-400 
+                   bg-white 
+                   peer-checked:bg-gradient-to-b peer-checked:from-[#ff9a9e] peer-checked:to-[#ff6666] 
+                   peer-checked:border-transparent transition-all duration-200"></span>
+
+                {/* Checkmark */}
+                <svg className="absolute top-[2px] left-[2px] w-4 h-4 text-white opacity-0 
+                 peer-checked:opacity-100 transition-opacity duration-200 pointer-events-none"
+                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+              </label>
+
+              <div className='absolute top-3 right-3 flex gap-2 bg-white rounded-md p-1 border border-gray-200'>
+                <button
+                  className="text-yellow-400 cursor-pointer"
+                  onClick={() => toggleFavorite(post.id)}
+                >
+                  {post.favorite ? <FaStar size={22} /> : <FaRegStar size={22} className="text-black" />}
+                </button>
+
+                <button className="text-gray-400 hover:text-gray-700 cursor-pointer">
+                  <FiMoreHorizontal size={22} />
+                </button>
+              </div>
+              <img src={post.image} alt={post.title} className="rounded-md h-40 sm:h-44 object-contain" />
+            </div>
+            <div className="flex-1 mt-3 ">
+              <div className="text-md text-gray-800 mb-1">{post.title}</div>
+              <div className="text-sm text-gray-500 mb-2">{post.size}</div>
             </div>
           </div>
         ))}
       </div>
+
     </div>
   );
 };
 
 export default Home;
-    
