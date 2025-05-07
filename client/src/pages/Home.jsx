@@ -5,66 +5,39 @@ import assets from '../assets/assets';
 import { StoreContext } from '../Context/StoreContext';
 
 
-const initialPosts = [
-  {
-    id: 1,
-    image: 'https://images.pexels.com/photos/3802508/pexels-photo-3802508.jpeg?auto=compress&cs=tinysrgb&w=600',
-    title: 'Untitled Post',
-    size: '1080 × 1080 px Instagram post',
-    favorite: false,
-  },
-  {
-    id: 2,
-    image: 'https://images.pexels.com/photos/253096/pexels-photo-253096.jpeg?auto=compress&cs=tinysrgb&w=600',
-    title: 'Untitled Post',
-    size: '1584 × 396 px Linkedin banner',
-    favorite: false,
-  },
-  {
-    id: 3,
-    image: 'https://images.pexels.com/photos/35967/mini-cooper-auto-model-vehicle.jpg?auto=compress&cs=tinysrgb&w=600',
-    title: 'Untitled Post',
-    size: '1080 × 1080 px Instagram post',
-    favorite: false,
-  },
-  {
-    id: 4,
-    image: 'https://images.pexels.com/photos/919073/pexels-photo-919073.jpeg?auto=compress&cs=tinysrgb&w=600',
-    title: 'Untitled Post',
-    size: '1584 × 396 px Linkedin banner',
-    favorite: false,
-  },
-];
-
 const Home = () => {
-  const [posts, setPosts] = useState(initialPosts);
+
+  const { setIsModalOpen, businesses,post, setPost, setIsModal } = useContext(StoreContext);
  
-  const { setIsModalOpen, businesses } = useContext(StoreContext);
 
   const toggleFavorite = (id) => {
-    setPosts((prevPosts) =>
-      prevPosts.map((post) =>
+    setPost((prevPosts) => {
+      if (!Array.isArray(prevPosts)) return prevPosts; // Prevent crashing
+      return prevPosts.map((post) =>
         post.id === id ? { ...post, favorite: !post.favorite } : post
-      )
-    );
+      );
+    });
   };
 
   return (
     <div className="min-h-screen bg-white px-4 py-8 sm:px-6 md:px-10 lg:px-20">
       {/* Business Section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
+
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold mb-2">Explore Business Posts</h2>
           <p className="text-gray-600 max-w-2xl mb-5">
             See how businesses turn ideas into engaging posts. Each one features unique branding elements like logos, names, and tailored visuals—all powered by AI.
           </p>
         </div>
+
         <button
           onClick={() => setIsModalOpen(true)}
           className="bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white px-5 py-2 rounded-md font-semibold transition-colors mb-5 cursor-pointer"
         >
           Add Business
         </button>
+
       </div>
 
       {/* Business Cards */}
@@ -88,14 +61,19 @@ const Home = () => {
             <span className="font-semibold text-base sm:text-lg text-gray-800">
               {biz.name}
             </span>
-            <button className="absolute top-3 right-3 bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white rounded-md p-1 cursor-pointer">
+
+            <button
+              onClick={() => {
+                setIsModal(true);
+              }}
+              className="absolute top-3 right-3 bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white rounded-md p-1 cursor-pointer"
+            >
               <FiPlus size={18} />
             </button>
+
           </div>
         ))}
       </div>
-
-
 
       {/* Recently Created Posts */}
       <h2 className="text-2xl sm:text-3xl font-bold mb-2">Recently Created Posts</h2>
@@ -104,9 +82,11 @@ const Home = () => {
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-        {posts.map((post) => (
+        {post.map((post) => (
           <div key={post.id}>
+
             <div className="p-5 relative flex flex-col border border-gray-200 rounded-md bg-[#F2F2F2]">
+
               <label className="relative cursor-pointer w-5 h-5">
                 <input type="checkbox" className="peer absolute opacity-0 w-5 h-5 z-10 cursor-pointer bg-white" />
                 <span className="w-5 h-5 block rounded border border-gray-400 bg-white peer-checked:bg-gradient-to-b peer-checked:from-[#ff9a9e] peer-checked:to-[#ff6666] peer-checked:border-transparent transition-all duration-200"></span>
@@ -127,15 +107,20 @@ const Home = () => {
                   <FiMoreHorizontal size={22} />
                 </button>
               </div>
-              <img src={post.image} alt={post.title} className="rounded-md h-40 sm:h-44 object-contain" />
+              <img src={post.logoURL} alt={post.title} className="rounded-md h-40 sm:h-44 object-contain" />
             </div>
             <div className="flex-1 mt-3">
-              <div className="text-md text-gray-800 mb-1">{post.title}</div>
-              <div className="text-sm text-gray-500 mb-2">{post.size}</div>
+              <div className="text-md text-gray-800 mb-1">{post.postType}</div>
+              <div className="text-sm text-gray-500 mb-2">{post.tone}</div>
+              <div className="text-sm text-gray-500 mb-2">{post.businessName}</div>
             </div>
           </div>
         ))}
       </div>
+
+
+
+
     </div>
   );
 };
