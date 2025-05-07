@@ -16,6 +16,7 @@ export const ShopContextProvider = ({ children }) => {
   const [postType, setPostType] = useState('');
   const [tone, setTone] = useState('');
   const [postDescription, setPostDescription] = useState('');
+  const [businessName, setBusinessName] = useState("");
 
 
   const handleImageChange = (e) => {
@@ -76,7 +77,7 @@ export const ShopContextProvider = ({ children }) => {
       tone,
       logoURL,
       postDescription,
-      businessName: newBizName,
+      businessName,
       favorite: false,
     };
 
@@ -88,6 +89,7 @@ export const ShopContextProvider = ({ children }) => {
     setSelectedImage(null);
     setLogoURL('');
     setPostDescription('');
+    setBusinessName('');
     setIsModal(false);
   };
 
@@ -113,7 +115,7 @@ export const ShopContextProvider = ({ children }) => {
       {children}
 
       {isModalOpen && (
-          <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center lg:justify-start lg:items-start lg:flex-none z-50 px-2 overflow-y-auto">
+        <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center lg:justify-start lg:items-start lg:flex-none z-50 px-2 overflow-y-auto">
 
           <div className="relative z-10 bg-white rounded-lg shadow-xl w-11/12 sm:w-full max-w-md sm:max-w-xl sm:mx-auto sm:my-10 sm:rounded-lg sm:h-auto">
 
@@ -192,8 +194,8 @@ export const ShopContextProvider = ({ children }) => {
                   </div>
                   {selectedImage && (
                     <p className="mt-2 text-green-600 text-sm whitespace-normal break-words max-w-full">
-                    {selectedImage.name}
-                  </p>
+                      {selectedImage.name}
+                    </p>
                   )}
                 </div>
               </div>
@@ -270,8 +272,8 @@ export const ShopContextProvider = ({ children }) => {
                 <label className="block text-gray-700 mb-1 text-sm">Business Name</label>
                 <input
                   type="text"
-                  value={newBizName}
-                  onChange={(e) => setNewBizName(e.target.value)}
+                  value={businessName}
+                  onChange={(e) => setBusinessName(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm"
                   placeholder="Enter your business name"
                   required
@@ -328,7 +330,7 @@ export const ShopContextProvider = ({ children }) => {
               <button
                 type="submit"
                 className="bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white py-2 w-full rounded-md transition-colors duration-200"
-                disabled={!newBizName || !logoURL || !postDescription}
+                disabled={!businessName || !logoURL || !postDescription}
               >
                 Generate
               </button>

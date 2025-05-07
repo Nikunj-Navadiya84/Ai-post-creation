@@ -1,18 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { FaStar, FaRegStar } from 'react-icons/fa';
-import { FiPlus, FiMoreHorizontal } from 'react-icons/fi';
+import { FiPlus } from 'react-icons/fi';
 import assets from '../assets/assets';
 import { StoreContext } from '../Context/StoreContext';
+import Menu from '../components/Menu';
 
 
 const Home = () => {
 
-  const { setIsModalOpen, businesses,post, setPost, setIsModal } = useContext(StoreContext);
- 
+  const { setIsModalOpen, businesses, post, setPost, setIsModal } = useContext(StoreContext);
 
   const toggleFavorite = (id) => {
     setPost((prevPosts) => {
-      if (!Array.isArray(prevPosts)) return prevPosts; // Prevent crashing
+      if (!Array.isArray(prevPosts)) return prevPosts;
       return prevPosts.map((post) =>
         post.id === id ? { ...post, favorite: !post.favorite } : post
       );
@@ -21,23 +21,21 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-white px-4 py-8 sm:px-6 md:px-10 lg:px-20">
+
       {/* Business Section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
-
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold mb-2">Explore Business Posts</h2>
           <p className="text-gray-600 max-w-2xl mb-5">
             See how businesses turn ideas into engaging posts. Each one features unique branding elements like logos, names, and tailored visuals—all powered by AI.
           </p>
         </div>
-
         <button
           onClick={() => setIsModalOpen(true)}
           className="bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white px-5 py-2 rounded-md font-semibold transition-colors mb-5 cursor-pointer"
         >
           Add Business
         </button>
-
       </div>
 
       {/* Business Cards */}
@@ -46,10 +44,7 @@ const Home = () => {
           <div
             key={biz.id}
             className="rounded-xl shadow border border-gray-200 flex items-center gap-5 p-5 relative"
-            style={{
-              backgroundImage: `url(${assets.bg})`,
-              backgroundSize: 'cover',
-            }}
+            style={{ backgroundImage: `url(${assets.bg})`, backgroundSize: 'cover' }}
           >
             {biz.logo && (
               <img
@@ -63,14 +58,11 @@ const Home = () => {
             </span>
 
             <button
-              onClick={() => {
-                setIsModal(true);
-              }}
+              onClick={() => setIsModal(true)}
               className="absolute top-3 right-3 bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white rounded-md p-1 cursor-pointer"
             >
               <FiPlus size={18} />
             </button>
-
           </div>
         ))}
       </div>
@@ -82,9 +74,8 @@ const Home = () => {
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-        {post.map((post) => (
+        {post.slice(-4).map((post) => (
           <div key={post.id}>
-
             <div className="p-5 relative flex flex-col border border-gray-200 rounded-md bg-[#F2F2F2]">
 
               <label className="relative cursor-pointer w-5 h-5">
@@ -103,24 +94,21 @@ const Home = () => {
                 >
                   {post.favorite ? <FaStar size={22} /> : <FaRegStar size={22} className="text-black" />}
                 </button>
-                <button className="text-gray-400 hover:text-gray-700 cursor-pointer">
-                  <FiMoreHorizontal size={22} />
-                </button>
+
+                {/* ✅ Updated: Using Menu component */}
+                <Menu />
               </div>
+
               <img src={post.logoURL} alt={post.title} className="rounded-md h-40 sm:h-44 object-contain" />
             </div>
+
             <div className="flex-1 mt-3">
-              <div className="text-md text-gray-800 mb-1">{post.postType}</div>
-              <div className="text-sm text-gray-500 mb-2">{post.tone}</div>
-              <div className="text-sm text-gray-500 mb-2">{post.businessName}</div>
+              <div className="text-md text-gray-800 font-semibold mb-1">{post.businessName}</div>
+              <div className="text-sm text-gray-500 mb-2">{post.postType}</div>
             </div>
           </div>
         ))}
       </div>
-
-
-
-
     </div>
   );
 };

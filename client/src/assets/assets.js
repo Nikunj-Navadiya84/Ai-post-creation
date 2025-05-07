@@ -7,6 +7,14 @@ import group3 from './group3.svg'
 import bg from './bg.png'
 import logo1 from './logo1.png'
 import logo2 from './logo2.png'
+import share1 from './share1.svg'
+import share2 from './share2.svg'
+import share3 from './share3.svg'
+import share4 from './share4.svg'
+import share5 from './share5.svg'
+import share6 from './share6.svg'
+import share7 from './share7.svg'
+
 
 const assets = {
     login1,
@@ -18,6 +26,13 @@ const assets = {
     bg,
     logo1,
     logo2,
+    share1,
+    share2,
+    share3,
+    share4,
+    share5,
+    share6,
+    share7,
 }
 
 export default assets
