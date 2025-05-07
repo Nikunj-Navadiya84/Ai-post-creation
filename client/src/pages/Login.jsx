@@ -92,7 +92,7 @@ const Login = () => {
                 name="rememberMe"
                 checked={formData.rememberMe}
                 onChange={handleChange}
-                className="h-4 w-4 text-pink-500 focus:ring-pink-400 border-gray-300 rounded mr-2 cursor-pointer"
+                className="h-4 w-4 border-gray-300 rounded mr-2 cursor-pointer"
               />
               Remember Me
             </label>
@@ -103,7 +103,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#ff9a9e] text-white py-2 rounded-md hover:bg-[#ff8589] transition-colors duration-200 cursor-pointer mb-3"
+            className="w-full bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white py-2 rounded-md  transition-colors duration-200 cursor-pointer mb-3"
           >
             Login
           </button>

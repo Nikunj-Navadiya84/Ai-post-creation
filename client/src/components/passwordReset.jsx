@@ -31,7 +31,7 @@ const PasswordReset = () => {
                 <Link to={"/"}>
                     <button
                         type="submit"
-                        className="w-full bg-[#ff9a9e] text-white py-2 rounded-md hover:bg-[#ff8589] transition-colors duration-200 cursor-pointer"
+                        className="w-full bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white py-2 rounded-md  transition-colors duration-200 cursor-pointer"
                     >
                         Continue
                     </button>

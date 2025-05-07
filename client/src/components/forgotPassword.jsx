@@ -53,7 +53,7 @@ const ForgotPassword = () => {
                     <Link to={'/checkYourEmail'}>
                         <button
                             type="submit"
-                            className="w-full bg-[#ff9a9e] hover:bg-[#ff8589]  text-white py-2 rounded-md transition duration-200 cursor-pointer"
+                            className="w-full bg-gradient-to-b from-[#ff9a9e] to-[#ff6666]  text-white py-2 rounded-md transition duration-200 cursor-pointer"
                         >
                             Reset Password
                         </button>
