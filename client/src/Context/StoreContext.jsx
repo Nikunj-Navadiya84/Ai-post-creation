@@ -113,8 +113,9 @@ export const ShopContextProvider = ({ children }) => {
       {children}
 
       {isModalOpen && (
-        <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center z-50 px-2">
-          <div className="relative z-10 bg-white rounded-lg shadow-xl w-11/12 sm:w-full max-w-md">
+          <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center lg:justify-start lg:items-start lg:flex-none z-50 px-2 overflow-y-auto">
+
+          <div className="relative z-10 bg-white rounded-lg shadow-xl w-11/12 sm:w-full max-w-md sm:max-w-xl sm:mx-auto sm:my-10 sm:rounded-lg sm:h-auto">
 
             {/* Close Button */}
             <div className='flex items-center justify-center'>
@@ -190,7 +191,9 @@ export const ShopContextProvider = ({ children }) => {
                     <p className="text-sm text-gray-500 mt-2">supported formats: JPG, PNG</p>
                   </div>
                   {selectedImage && (
-                    <p className="mt-2 text-green-600 text-sm">Selected: {selectedImage.name}</p>
+                    <p className="mt-2 text-green-600 text-sm whitespace-normal break-words max-w-full">
+                    {selectedImage.name}
+                  </p>
                   )}
                 </div>
               </div>
@@ -208,8 +211,9 @@ export const ShopContextProvider = ({ children }) => {
       )}
 
       {isModal && (
-        <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center z-50 px-2">
-          <div className="relative z-10 bg-white rounded-lg shadow-xl w-11/12 sm:w-full max-w-md">
+        <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center lg:justify-start lg:items-start lg:flex-none z-50 px-2 overflow-y-auto">
+
+          <div className="relative z-10 bg-white rounded-lg shadow-xl w-11/12 sm:w-full max-w-md sm:max-w-xl sm:mx-auto sm:my-10 sm:rounded-lg sm:h-auto">
             {/* Close Button */}
             <div className='flex items-center justify-center'>
               <button
@@ -231,7 +235,7 @@ export const ShopContextProvider = ({ children }) => {
             <form onSubmit={handleSubmitpost} className='p-6'>
 
               {/* Post Details Dropdown */}
-              <div className="mb-4">
+              <div className="mb-3">
                 <label className="block text-gray-700 mb-1 text-sm">Post Details</label>
                 <select
                   value={postType}
@@ -246,7 +250,7 @@ export const ShopContextProvider = ({ children }) => {
               </div>
 
               {/* Tone Selection Dropdown */}
-              <div className="mb-4">
+              <div className="mb-3">
                 <label className="block text-gray-700 mb-1 text-sm">Tone Selection</label>
                 <select
                   value={tone}
@@ -262,7 +266,7 @@ export const ShopContextProvider = ({ children }) => {
               </div>
 
               {/* Business Name Input */}
-              <div className="mb-4">
+              <div className="mb-3">
                 <label className="block text-gray-700 mb-1 text-sm">Business Name</label>
                 <input
                   type="text"
@@ -275,9 +279,9 @@ export const ShopContextProvider = ({ children }) => {
               </div>
 
               {/* Logo / Image */}
-              <div className="mb-4">
+              <div className="mb-3">
                 <label className="block text-gray-700 mb-1 text-sm">Logo / Image</label>
-                <div className="border border-gray-300 border-dashed rounded-md p-6 text-center text-sm">
+                <div className="border border-gray-300 border-dashed rounded-md p-3 text-center text-sm">
                   <div className="flex flex-col items-center">
                     <img
                       src={assets.upload}
@@ -296,20 +300,20 @@ export const ShopContextProvider = ({ children }) => {
                     />
                     <label
                       htmlFor="file-upload"
-                      className="bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white px-6 py-2 rounded-md cursor-pointer transition-colors duration-200"
+                      className="bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white px-6 py-2 rounded-md cursor-pointer transition-colors duration-200 text-sm"
                     >
                       Upload
                     </label>
                     <p className="text-sm text-gray-500 mt-2">supported formats: JPG, PNG</p>
                   </div>
                   {selectedImage && (
-                    <p className="mt-2 text-green-600 text-sm">Selected: {selectedImage.name}</p>
+                    <p className="mt-2 text-green-600 text-sm whitespace-normal break-words max-w-full">{selectedImage.name}</p>
                   )}
                 </div>
               </div>
 
               {/* Post / Banner Description */}
-              <div className="mb-6">
+              <div className="mb-4">
                 <label className="block text-gray-700 mb-1 text-sm">Post / Banner Description</label>
                 <textarea
                   value={postDescription}

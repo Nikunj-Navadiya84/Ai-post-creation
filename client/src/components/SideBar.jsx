@@ -39,15 +39,15 @@ const SideBar = () => {
             </div>
 
             {/* Mobile Logout Button */}
-            <div className="fixed bottom-4 w-full px-4 z-50 md:hidden">
-                <div className="flex justify-between items-center bg-white shadow-md p-3 rounded-full mx-auto max-w-sm">
+            <div className="fixed bottom-0 w-full px-4 z-50 md:hidden">
+                <div className="flex justify-between items-center bg-white shadow-md p-1 rounded-full mx-auto max-w-sm">
 
                     <Link to="/home">
                         <button
                             className="text-white p-3 rounded-full shadow-md"
                             style={{ backgroundColor: '#FF6666' }}
                         >
-                            <img src={assets.group1} alt="" className="w-5 h-5" />
+                            <img src={assets.group1} alt="" className="w-3 h-3" />
                         </button>
                     </Link>
 
@@ -56,7 +56,7 @@ const SideBar = () => {
                             className="text-white p-3 rounded-full shadow-md"
                             style={{ backgroundColor: '#FF6666' }}
                         >
-                            <img src={assets.group} alt="" className="w-5 h-5" />
+                            <img src={assets.group} alt="" className="w-3 h-3" />
                         </button>
                     </Link>
 
@@ -65,7 +65,7 @@ const SideBar = () => {
                         className="text-white p-3 rounded-full shadow-md"
                         style={{ backgroundColor: '#FF6666' }}
                     >
-                        <img src={assets.group3} alt="" className="w-5 h-5" />
+                        <img src={assets.group3} alt="" className="w-3 h-3" />
                     </button>
 
                 </div>
