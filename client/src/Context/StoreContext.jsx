@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState , useEffect} from "react";
 export const StoreContext = createContext();
 import assets from '../assets/assets';
 
@@ -40,7 +40,16 @@ export const ShopContextProvider = ({ children }) => {
         address: newBizAddress,
         logo: logoURL,
       };
-      setBusinesses([...businesses, newBusiness]);
+  
+      const updatedBusinesses = [...businesses, newBusiness];
+  
+      // Update state
+      setBusinesses(updatedBusinesses);
+  
+      // Store in localStorage
+      localStorage.setItem('businesses', JSON.stringify(updatedBusinesses));
+  
+      // Reset form
       setNewBizName('');
       setNewBizAddress('');
       setSelectedImage(null);
@@ -48,7 +57,14 @@ export const ShopContextProvider = ({ children }) => {
       setIsModalOpen(false);
     }
   };
-
+  
+  useEffect(() => {
+    const storedBusinesses = localStorage.getItem('businesses');
+    if (storedBusinesses) {
+      setBusinesses(JSON.parse(storedBusinesses));
+    }
+  }, []);
+  
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -108,10 +124,16 @@ export const ShopContextProvider = ({ children }) => {
     setIsModal(false);
   };
 
+  useEffect(() => {
+    const storedPosts = localStorage.getItem("posts");
+    if (storedPosts) {
+      setPost(JSON.parse(storedPosts));
+    }
+  }, []);
+
   const handleCloseModalpost = () => {
     setIsModal(false);
   };
-
 
   const handleRegeneratePost = (post) => {
     setEditingPost(post);

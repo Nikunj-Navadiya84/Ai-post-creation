@@ -13,7 +13,7 @@ import NavBar from './components/NavBar'
 import GeneratedContent from './pages/GeneratedContent'
 import PostReady from './components/PostReady'
 
-const LayoutRoutes = ['/home', '/generatedcontent']
+const LayoutRoutes = ['/home', '/generatedcontent','/postready']
 
 function AppLayout() {
   const location = useLocation()
