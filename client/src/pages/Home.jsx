@@ -78,15 +78,7 @@ const Home = () => {
           <div key={post.id}>
             <div className="p-5 relative flex flex-col border border-gray-200 rounded-md bg-[#F2F2F2]">
 
-              <label className="relative cursor-pointer w-5 h-5">
-                <input type="checkbox" className="peer absolute opacity-0 w-5 h-5 z-10 cursor-pointer bg-white" />
-                <span className="w-5 h-5 block rounded border border-gray-400 bg-white peer-checked:bg-gradient-to-b peer-checked:from-[#ff9a9e] peer-checked:to-[#ff6666] peer-checked:border-transparent transition-all duration-200"></span>
-                <svg className="absolute top-[2px] left-[2px] w-4 h-4 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200 pointer-events-none"
-                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                </svg>
-              </label>
-
+             
               <div className='absolute top-3 right-3 flex gap-2 bg-white rounded-md p-1 border border-gray-200'>
                 <button
                   className="text-yellow-400 cursor-pointer"

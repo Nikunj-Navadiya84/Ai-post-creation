@@ -8,7 +8,7 @@ const PostReady = () => {
     const selectedPost = location.state?.selectedPost;
     const {
         logoURL,
-        selectedImage,setPost,
+        selectedImage, setPost,
         postType, setPostType,
         tone, setTone,
         postDescription, setPostDescription,
@@ -45,9 +45,9 @@ const PostReady = () => {
     useEffect(() => {
         const storedPosts = localStorage.getItem("posts");
         if (storedPosts) {
-          setPost(JSON.parse(storedPosts));
+            setPost(JSON.parse(storedPosts));
         }
-      }, []);
+    }, []);
 
 
     useEffect(() => {
@@ -63,19 +63,21 @@ const PostReady = () => {
 
     return (
         <div className="bg-white px-4 py-8 sm:px-6 md:px-10 lg:px-20">
-            <div className="flex grid-cols-2 gap-5 flex-col lg:flex-row">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-5">Your post is ready!</h2>
+            <div className="flex grid-cols-2 gap-15 flex-col lg:flex-row">
                 {/* Preview Section */}
-                <div className="w-full max-h-screen">
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-2">Your post is ready!</h2>
-                    <div className="p-5 flex flex-col border border-gray-200 rounded-md bg-[#F2F2F2]">
+                <div className="w-full ">
+
+                    <div className="p-5  flex flex-col items-center justify-center border border-gray-200 rounded-md bg-[#F2F2F2]">
                         {logoURL ? (
                             <img
                                 src={logoURL}
                                 alt="logo"
-                                className="rounded-md h-40 sm:h-44 object-contain"
+                                className="rounded-md  h-120.5 object-cover"
                             />
                         ) : null}
                     </div>
+
 
                     <div className="flex-1 mt-3">
                         <div className="text-md text-gray-800 font-semibold mb-1">{businessName}</div>
@@ -94,11 +96,11 @@ const PostReady = () => {
 
                 {/* Form Section */}
                 <div className="w-full">
-                    <form onSubmit={handleSubmitpost} className='p-6'>
+                    <form onSubmit={handleSubmitpost}>
 
                         {/* Post Type */}
                         <div className="mb-3">
-                            <label className="block text-gray-700 mb-1 text-sm">Post Details</label>
+                            <label className="block text-gray-700 mb-1 text-lg font-semibold">Post Details</label>
                             <select
                                 value={postType}
                                 onChange={(e) => setPostType(e.target.value)}
@@ -113,7 +115,7 @@ const PostReady = () => {
 
                         {/* Tone */}
                         <div className="mb-3">
-                            <label className="block text-gray-700 mb-1 text-sm">Tone Selection</label>
+                            <label className="block text-gray-700 mb-1 text-lg font-semibold">Tone Selection</label>
                             <select
                                 value={tone}
                                 onChange={(e) => setTone(e.target.value)}
@@ -129,7 +131,7 @@ const PostReady = () => {
 
                         {/* Business Name */}
                         <div className="mb-3">
-                            <label className="block text-gray-700 mb-1 text-sm">Business Name</label>
+                            <label className="block text-gray-700 mb-1 text-lg font-semibold">Business Name</label>
                             <input
                                 type="text"
                                 value={businessName}
@@ -142,7 +144,7 @@ const PostReady = () => {
 
                         {/* Logo Upload */}
                         <div className="mb-3">
-                            <label className="block text-gray-700 mb-1 text-sm">Logo / Image</label>
+                            <label className="block text-gray-700 mb-1 text-lg font-semibold">Logo / Image</label>
                             <div className="border border-gray-300 border-dashed rounded-md p-3 text-center text-sm">
                                 <div className="flex flex-col items-center">
                                     <img
@@ -178,7 +180,7 @@ const PostReady = () => {
 
                         {/* Description */}
                         <div className="mb-4">
-                            <label className="block text-gray-700 mb-1 text-sm">Post / Banner Description</label>
+                            <label className="block text-gray-700 mb-1 text-lg font-semibold">Post / Banner Description</label>
                             <textarea
                                 value={postDescription}
                                 onChange={(e) => setPostDescription(e.target.value)}

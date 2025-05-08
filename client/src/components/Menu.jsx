@@ -1,13 +1,11 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
-import { FiMoreHorizontal, FiDownload, FiShare2, FiTrash } from 'react-icons/fi';
+import React, { useState, useRef, useEffect } from 'react';
+import { FiMoreHorizontal, FiDownload, FiShare2, FiEdit } from 'react-icons/fi';
+import { RiDeleteBinLine } from "react-icons/ri";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import { FiEdit } from "react-icons/fi";
 import assets from '../assets/assets';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-
-
-const Menu = ({ selectedPost }) => {
+const Menu = ({ selectedPost, onDelete }) => {
     const [open, setOpen] = useState(false);
     const [shareOpen, setShareOpen] = useState(false);
     const menuRef = useRef(null);
@@ -25,6 +23,11 @@ const Menu = ({ selectedPost }) => {
         };
     }, []);
 
+    const handleDelete = () => {
+        onDelete(selectedPost?._id); // Call the passed delete handler with post ID
+        setOpen(false); // Close the menu after deletion
+    };
+
     return (
         <div className="relative inline-block" ref={menuRef}>
             <button
@@ -37,12 +40,11 @@ const Menu = ({ selectedPost }) => {
             {open && (
                 <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg z-50 py-2">
 
-                   <Link to='/postReady' state={{ selectedPost }}>
-                   <button
-                        className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100">
-                        <FiEdit className="mr-3" /> Regenerate Post
-                    </button>
-                   </Link>
+                    <Link to="/postReady" state={{ selectedPost }}>
+                        <button className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            <FiEdit className="mr-3" /> Regenerate Post
+                        </button>
+                    </Link>
 
                     <button className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer">
                         <FiDownload className="mr-3" /> Download
@@ -60,34 +62,19 @@ const Menu = ({ selectedPost }) => {
                     </button>
 
                     {shareOpen && (
-                        <div className="grid grid-cols-5  gap-2 py-3">
-                            <button className="flex items-center justify-center cursor-pointer m-1">
-                                <img src={assets.share4} className='w-7 h-7' alt="" />
-                            </button>
-                            <button className="flex items-center justify-center cursor-pointer m-1">
-                                <img src={assets.share1} className='w-7 h-7' alt="" />
-                            </button>
-                            <button className="flex items-center justify-center cursor-pointer m-1">
-                                <img src={assets.share2} className='w-7 h-7' alt="" />
-                            </button>
-                            <button className="flex items-center justify-center cursor-pointer m-1">
-                                <img src={assets.share3} className='w-7 h-7' alt="" />
-                            </button>
-                            <button className="flex items-center justify-center cursor-pointer m-1">
-                                <img src={assets.share5} className='w-7 h-7' alt="" />
-                            </button>
-                            <button className="flex items-center justify-center cursor-pointer m-1">
-                                <img src={assets.share6} className='w-7 h-7' alt="" />
-                            </button>
-                            <button className="flex items-center justify-center cursor-pointer m-1">
-                                <img src={assets.share7} className='w-7 h-7' alt="" />
-                            </button>
+                        <div className="grid grid-cols-5 gap-2 py-3 px-4">
+                            {[assets.share4, assets.share1, assets.share2, assets.share3, assets.share5, assets.share6, assets.share7].map((icon, idx) => (
+                                <button key={idx} className="flex items-center justify-center cursor-pointer m-1">
+                                    <img src={icon} className='w-7 h-7' alt={`share-${idx}`} />
+                                </button>
+                            ))}
                         </div>
                     )}
 
-                    <button className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer">
-                        <FiTrash className="mr-3" /> Move To Trash
+                    <button className="flex items-center w-full px-4 py-2 text-red-600 hover:bg-gray-100 transition-colors cursor-pointer">
+                        <RiDeleteBinLine className="mr-3" /> Move To Trash
                     </button>
+                    
                 </div>
             )}
         </div>
