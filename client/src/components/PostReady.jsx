@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
 import assets from "../assets/assets";
 import { StoreContext } from "../Context/StoreContext";
@@ -17,6 +17,9 @@ const PostReady = () => {
         handleRegeneratePost,
         handleImageChangepost,
     } = useContext(StoreContext);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalImage, setModalImage] = useState(null);
 
     const handleSubmitpost = (e) => {
         e.preventDefault();
@@ -56,6 +59,17 @@ const PostReady = () => {
         }
     }, [selectedPost]);
 
+    const openModal = (image) => {
+        setModalImage(image);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setModalImage(null);
+    };
+
+
 
     if (!selectedPost) {
         return <div>No post selected.</div>;
@@ -68,12 +82,13 @@ const PostReady = () => {
                 {/* Preview Section */}
                 <div className="w-full ">
 
-                    <div className="p-5  flex flex-col items-center justify-center border border-gray-200 rounded-md bg-[#F2F2F2]">
+                    <div className="p-5  flex flex-col  items-center justify-center border border-gray-200 rounded-md bg-[#F2F2F2]">
                         {logoURL ? (
                             <img
                                 src={logoURL}
                                 alt="logo"
-                                className="rounded-md  h-120.5 object-cover"
+                                className="rounded-md w-full h-120.5 object-contain"
+                                onClick={() => openModal(logoURL)}
                             />
                         ) : null}
                     </div>
@@ -204,6 +219,25 @@ const PostReady = () => {
                     </form>
                 </div>
             </div>
+
+             {/* Modal for full-screen image */}
+             {isModalOpen && (
+                <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center z-50">
+                    <div className="relative max-w-full max-h-full p-20 border bg-gray-100">
+                        <img
+                            src={modalImage}
+                            alt="Full screen"
+                            className="object-contain max-w-full max-h-full"
+                        />
+                        <button
+                            onClick={closeModal}
+                            className="absolute w-10 h-10 top-1 right-1 p-2 text-white bg-red-400 rounded-full cursor-pointer"
+                        >
+                            X
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

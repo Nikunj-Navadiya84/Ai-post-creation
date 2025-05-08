@@ -393,7 +393,7 @@ export const ShopContextProvider = ({ children }) => {
                   ? 'bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] cursor-pointer'
                   : 'bg-gray-300 cursor-not-allowed'
                   }`}
-                disabled={!businessName || !logoURL || !postDescription}
+                disabled={!businessName  || !postDescription}
               >
                 Generate
               </button>
