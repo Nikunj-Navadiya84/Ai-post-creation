@@ -246,8 +246,8 @@ export const ShopContextProvider = ({ children }) => {
                   required
                 >
                   <option value="">Post / Banner Type</option>
-                  <option value="post">Post</option>
-                  <option value="banner">Banner</option>
+                  <option value="Post (1080*1080)">Post (1080*1080)</option>
+                  <option value="Banner (1584*396)">Banner (1584*396)</option>
                 </select>
               </div>
 
