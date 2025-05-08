@@ -119,11 +119,15 @@ const CollectInformation = () => {
 
                     {/* Submit Button */}
                     <button
-                        type="submit"
-                        className="bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white py-2 w-full rounded-md transition-colors duration-200"
-                    >
-                        Save Business Information
-                    </button>
+                type="submit"
+                className={`text-white py-2 w-full rounded-md transition-colors duration-200 ${newBizName && logoURL && newBizAddress
+                  ? 'bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] cursor-pointer'
+                  : 'bg-gray-300 cursor-not-allowed'
+                  }`}
+                disabled={!newBizName || !logoURL || !newBizAddress}
+              >
+                Save Business Information
+              </button>
                 </form>
             </div>
         </div>

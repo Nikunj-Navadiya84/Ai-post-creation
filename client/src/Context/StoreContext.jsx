@@ -115,7 +115,7 @@ export const ShopContextProvider = ({ children }) => {
       {children}
 
       {isModalOpen && (
-        <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center lg:justify-start lg:items-start lg:flex-none z-50 px-2 overflow-y-auto">
+        <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center lg:justify-start lg:items-start lg:flex-none 2xl:justify-center 2xl:items-center z-50 px-2 overflow-y-auto">
 
           <div className="relative z-10 bg-white rounded-lg shadow-xl w-11/12 sm:w-full max-w-md sm:max-w-xl sm:mx-auto sm:my-10 sm:rounded-lg sm:h-auto">
 
@@ -203,7 +203,11 @@ export const ShopContextProvider = ({ children }) => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white py-2 w-full rounded-md transition-colors duration-200"
+                className={`text-white py-2 w-full rounded-md transition-colors duration-200 ${newBizName && logoURL && newBizAddress
+                  ? 'bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] cursor-pointer'
+                  : 'bg-gray-300 cursor-not-allowed'
+                  }`}
+                disabled={!newBizName || !logoURL || !newBizAddress}
               >
                 Save Business Information
               </button>
@@ -213,7 +217,7 @@ export const ShopContextProvider = ({ children }) => {
       )}
 
       {isModal && (
-        <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center lg:justify-start lg:items-start lg:flex-none z-50 px-2 overflow-y-auto">
+        <div className="fixed inset-0 backdrop-brightness-40 flex justify-center items-center lg:justify-start lg:items-start 2xl:justify-center 2xl:items-center lg:flex-none z-50 px-2 overflow-y-auto">
 
           <div className="relative z-10 bg-white rounded-lg shadow-xl w-11/12 sm:w-full max-w-md sm:max-w-xl sm:mx-auto sm:my-10 sm:rounded-lg sm:h-auto">
             {/* Close Button */}
@@ -329,7 +333,10 @@ export const ShopContextProvider = ({ children }) => {
               {/* Generate Button */}
               <button
                 type="submit"
-                className="bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white py-2 w-full rounded-md transition-colors duration-200"
+                className={`text-white py-2 w-full rounded-md transition-colors duration-200 ${businessName && logoURL && postDescription
+                    ? 'bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] cursor-pointer'
+                    : 'bg-gray-300 cursor-not-allowed'
+                  }`}
                 disabled={!businessName || !logoURL || !postDescription}
               >
                 Generate

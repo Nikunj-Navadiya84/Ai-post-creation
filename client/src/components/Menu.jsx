@@ -33,7 +33,7 @@ const Menu = () => {
 
             {open && (
                 <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg z-50 py-2">
-                    
+
                     <button className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer">
                         <FiEdit className="mr-3" /> Regenerate Post
                     </button>
@@ -56,6 +56,9 @@ const Menu = () => {
                     {shareOpen && (
                         <div className="grid grid-cols-5  gap-2 py-3">
                             <button className="flex items-center justify-center cursor-pointer m-1">
+                                <img src={assets.share4} className='w-7 h-7' alt="" />
+                            </button>
+                            <button className="flex items-center justify-center cursor-pointer m-1">
                                 <img src={assets.share1} className='w-7 h-7' alt="" />
                             </button>
                             <button className="flex items-center justify-center cursor-pointer m-1">
@@ -63,9 +66,6 @@ const Menu = () => {
                             </button>
                             <button className="flex items-center justify-center cursor-pointer m-1">
                                 <img src={assets.share3} className='w-7 h-7' alt="" />
-                            </button>
-                            <button className="flex items-center justify-center cursor-pointer m-1">
-                                <img src={assets.share4} className='w-7 h-7' alt="" />
                             </button>
                             <button className="flex items-center justify-center cursor-pointer m-1">
                                 <img src={assets.share5} className='w-7 h-7' alt="" />

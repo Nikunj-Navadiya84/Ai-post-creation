@@ -20,7 +20,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white px-4 py-8 sm:px-6 md:px-10 lg:px-20">
+    <div className="bg-white px-4 py-8 sm:px-6 md:px-10 lg:px-20">
 
       {/* Business Section */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">

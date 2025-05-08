@@ -17,18 +17,13 @@ const GeneratedContent = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white px-4 py-8 sm:px-6 md:px-10 lg:px-20">
+        <div className="bg-white px-4 py-8 sm:px-6 md:px-10 lg:px-20">
 
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
-                <div>
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-2">Recently Created Posts</h2>
-                    <p className="text-gray-600 max-w-2xl mb-5">
-                        Here are your latest AI-generated posts, ready to download and share across your social media channels. Stay consistent and keep your audience engaged effortlessly.
-                    </p>
-                </div>
-                <button onClick={() => setIsModalOpen(true)} className="bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white px-5 py-2 rounded-md font-semibold transition-colors mb-5 cursor-pointer">
-                    Add Business
-                </button>
+            <div className="flex flex-col mb-4 gap-3">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-2">Recently Created Posts</h2>
+                <p className="text-gray-600 max-w-2xl mb-5">
+                    Here are your latest AI-generated posts, ready to download and share across your social media channels. Stay consistent and keep your audience engaged effortlessly.
+                </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
