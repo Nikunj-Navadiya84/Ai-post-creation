@@ -5,7 +5,7 @@ import Menu from '../components/Menu';
 
 const GeneratedContent = () => {
 
-    const { post, setPost } = useContext(StoreContext);
+    const { post, setPost, setEditingPost, setPostType, setTone, setLogoURL, setPostDescription, setBusinessName, setIsModal } = useContext(StoreContext);
 
     const toggleFavorite = (id) => {
         setPost((prevPosts) => {
@@ -49,7 +49,7 @@ const GeneratedContent = () => {
                                 </button>
 
                                 {/* ✅ Updated: Using Menu component */}
-                                <Menu />
+                                <Menu/>
                             </div>
 
                             <img src={post.logoURL} alt={post.title} className="rounded-md h-40 sm:h-44 object-contain" />

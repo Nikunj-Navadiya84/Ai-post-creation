@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { FiMoreHorizontal, FiDownload, FiShare2, FiTrash } from 'react-icons/fi';
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import assets from '../assets/assets';
+
 
 const Menu = () => {
     const [open, setOpen] = useState(false);
@@ -34,7 +35,7 @@ const Menu = () => {
             {open && (
                 <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg z-50 py-2">
 
-                    <button className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer">
+                    <button className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100">
                         <FiEdit className="mr-3" /> Regenerate Post
                     </button>
 

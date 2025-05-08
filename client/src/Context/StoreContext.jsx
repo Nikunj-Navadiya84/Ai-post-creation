@@ -2,7 +2,6 @@ import { createContext, useState } from "react";
 export const StoreContext = createContext();
 import assets from '../assets/assets';
 
-
 export const ShopContextProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newBizName, setNewBizName] = useState('');
@@ -17,6 +16,7 @@ export const ShopContextProvider = ({ children }) => {
   const [tone, setTone] = useState('');
   const [postDescription, setPostDescription] = useState('');
   const [businessName, setBusinessName] = useState("");
+  const [editingPost, setEditingPost] = useState(null);
 
 
   const handleImageChange = (e) => {
@@ -72,18 +72,33 @@ export const ShopContextProvider = ({ children }) => {
     e.preventDefault();
 
     const postData = {
-      id: Date.now(),
+      id: editingPost?.id || Date.now(),
       postType,
       tone,
       logoURL,
       postDescription,
       businessName,
-      favorite: false,
+      favorite: editingPost?.favorite || false,
     };
 
-    setPost((prevPosts) => [...prevPosts, postData]);
+    let posts = JSON.parse(localStorage.getItem("posts")) || [];
 
-    console.log('Submitted Post Data:', postData);
+    if (editingPost) {
+      // Update the existing post
+      posts = posts.map(p => p.id === editingPost.id ? postData : p);
+    } else {
+      // Add the new post
+      posts.push(postData);
+    }
+
+    // Save the updated posts array back to localStorage
+    localStorage.setItem("posts", JSON.stringify(posts));
+
+    // Update the state (if you're using state to store the posts)
+    setPost(posts);
+
+    // Reset form for new post
+    setEditingPost(null);
     setPostType('');
     setTone('custom');
     setSelectedImage(null);
@@ -105,8 +120,7 @@ export const ShopContextProvider = ({ children }) => {
     logoURL, setLogoURL,
     selectedImage, setSelectedImage,
     post, setPost,
-    setIsModal
-
+    isModal, setIsModal,
   };
 
 
@@ -334,8 +348,8 @@ export const ShopContextProvider = ({ children }) => {
               <button
                 type="submit"
                 className={`text-white py-2 w-full rounded-md transition-colors duration-200 ${businessName && logoURL && postDescription
-                    ? 'bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] cursor-pointer'
-                    : 'bg-gray-300 cursor-not-allowed'
+                  ? 'bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] cursor-pointer'
+                  : 'bg-gray-300 cursor-not-allowed'
                   }`}
                 disabled={!businessName || !logoURL || !postDescription}
               >
