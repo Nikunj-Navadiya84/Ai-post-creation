@@ -112,6 +112,19 @@ export const ShopContextProvider = ({ children }) => {
     setIsModal(false);
   };
 
+
+  const handleRegeneratePost = (post) => {
+    setEditingPost(post);
+    setPostType(post.postType);
+    setTone(post.tone);
+    setLogoURL(post.logoURL);
+    setPostDescription(post.postDescription);
+    setBusinessName(post.businessName);
+    setSelectedImage(null);
+    setIsModal(true);
+  };
+
+
   const contextValue = {
     isModalOpen, setIsModalOpen,
     businesses, setBusinesses,
@@ -121,6 +134,7 @@ export const ShopContextProvider = ({ children }) => {
     selectedImage, setSelectedImage,
     post, setPost,
     isModal, setIsModal,
+    handleRegeneratePost
   };
 
 

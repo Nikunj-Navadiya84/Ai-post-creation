@@ -11,6 +11,7 @@ import Home from './pages/Home'
 import SideBar from './components/SideBar'
 import NavBar from './components/NavBar'
 import GeneratedContent from './pages/GeneratedContent'
+import PostReady from './components/PostReady'
 
 const LayoutRoutes = ['/home', '/generatedcontent']
 
@@ -33,6 +34,7 @@ function AppLayout() {
           <Route path="/passwordReset" element={<PasswordReset />} />
           <Route path="/home" element={<Home />} />
           <Route path="/generatedcontent" element={<GeneratedContent />} />
+          <Route path="/postReady" element={<PostReady />} />
         </Routes>
       </div>
     </div>

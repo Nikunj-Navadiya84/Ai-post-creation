@@ -3,12 +3,14 @@ import { FiMoreHorizontal, FiDownload, FiShare2, FiTrash } from 'react-icons/fi'
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import assets from '../assets/assets';
+import { StoreContext } from '../Context/StoreContext';
 
 
-const Menu = () => {
+const Menu = ({ selectedPost }) => {
     const [open, setOpen] = useState(false);
     const [shareOpen, setShareOpen] = useState(false);
     const menuRef = useRef(null);
+    const {handleRegeneratePost} = useContext(StoreContext);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -35,7 +37,10 @@ const Menu = () => {
             {open && (
                 <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg z-50 py-2">
 
-                    <button className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    <button
+                        className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100"
+                        onClick={() => handleRegeneratePost(selectedPost)}>
+
                         <FiEdit className="mr-3" /> Regenerate Post
                     </button>
 

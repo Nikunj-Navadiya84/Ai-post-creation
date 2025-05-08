@@ -96,7 +96,7 @@ const Home = () => {
                 </button>
 
                 {/* ✅ Updated: Using Menu component */}
-                <Menu />
+                <Menu selectedPost={post}/>
               </div>
 
               <img src={post.logoURL} alt={post.title} className="rounded-md h-40 sm:h-44 object-contain" />
