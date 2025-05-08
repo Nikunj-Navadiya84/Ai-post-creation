@@ -143,7 +143,6 @@ export const ShopContextProvider = ({ children }) => {
     setPostDescription(post.postDescription);
     setBusinessName(post.businessName);
     setSelectedImage(null);
-    setIsModal(true);
   };
 
 
@@ -156,7 +155,14 @@ export const ShopContextProvider = ({ children }) => {
     selectedImage, setSelectedImage,
     post, setPost,
     isModal, setIsModal,
-    handleRegeneratePost
+    postType, setPostType,
+    tone, setTone,
+    postDescription, setPostDescription,
+    businessName, setBusinessName,
+    editingPost, setEditingPost,
+    handleRegeneratePost,
+    handleSubmitpost,
+    handleImageChangepost,
   };
 
 

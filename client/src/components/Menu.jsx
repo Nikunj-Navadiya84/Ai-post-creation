@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 
 
 
-const Menu = () => {
+const Menu = ({ selectedPost }) => {
     const [open, setOpen] = useState(false);
     const [shareOpen, setShareOpen] = useState(false);
     const menuRef = useRef(null);
@@ -37,7 +37,7 @@ const Menu = () => {
             {open && (
                 <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg z-50 py-2">
 
-                   <Link to='/postReady'>
+                   <Link to='/postReady' state={{ selectedPost }}>
                    <button
                         className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100">
                         <FiEdit className="mr-3" /> Regenerate Post
