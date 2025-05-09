@@ -82,7 +82,7 @@ const PostReady = () => {
                 {/* Preview Section */}
                 <div className="w-full ">
 
-                    <div className="p-5  flex flex-col  items-center justify-center border border-gray-200 rounded-md bg-[#F2F2F2]">
+                    <div className="p-5  flex flex-col h-124 items-center justify-center border border-gray-200 rounded-md bg-[#F2F2F2]">
                         {logoURL ? (
                             <img
                                 src={logoURL}
@@ -110,7 +110,7 @@ const PostReady = () => {
                 </div>
 
                 {/* Form Section */}
-                <div className="w-full">
+                <div className="w-full ">
                     <form onSubmit={handleSubmitpost}>
 
                         {/* Post Type */}
@@ -185,11 +185,11 @@ const PostReady = () => {
                                     </label>
                                     <p className="text-sm text-gray-500 mt-2">supported formats: JPG, PNG</p>
                                 </div>
-                                {selectedImage && (
+                                {/* {selectedImage && (
                                     <p className="mt-2 text-green-600 text-sm whitespace-normal break-words max-w-full">
                                         {selectedImage.name}
                                     </p>
-                                )}
+                                )} */}
                             </div>
                         </div>
 
