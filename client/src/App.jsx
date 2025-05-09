@@ -21,7 +21,6 @@ const LayoutRoutes = ['/home', '/generatedcontent', '/postready']
 function AppLayout() {
   const location = useLocation()
   const showLayout = LayoutRoutes.includes(location.pathname.toLowerCase())
-  const token = localStorage.getItem('token');
 
   return (
     <div className='flex'>
