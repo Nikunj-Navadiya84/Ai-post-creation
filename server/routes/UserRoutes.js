@@ -9,5 +9,4 @@ router.post("/login", login);
 router.get('/users', userMiddleware, users);
 router.post('/changepassword', userMiddleware, changepassword);
 
-
 module.exports = router;

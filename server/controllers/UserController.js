@@ -49,26 +49,26 @@ exports.login = async (req, res) => {
   }
 };
 
-// Fetch users
-exports.users = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select("name email");
+// // Fetch users
+// exports.users = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.user.id).select("name email");
 
-    return res.status(200).send({
-      success: true,
-      message: "Users successfully fetched",
-      userId: user._id,
-      email: req.user.email,
-      LoginUserName: req.user.name
-    });
-  } catch (err) {
-    return res.status(500).send({
-      success: false,
-      message: "Internal Server Error",
-      error: err.message
-    });
-  }
-};
+//     return res.status(200).send({
+//       success: true,
+//       message: "Users successfully fetched",
+//       userId: user._id,
+//       email: req.user.email,
+//       LoginUserName: req.user.name
+//     });
+//   } catch (err) {
+//     return res.status(500).send({
+//       success: false,
+//       message: "Internal Server Error",
+//       error: err.message
+//     });
+//   }
+// };
 
 // Change password
 exports.changepassword = async (req, res) => {
