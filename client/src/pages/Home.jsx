@@ -76,16 +76,18 @@ const Home = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
         {post.slice(-4).map((post) => (
           <div key={post.id}>
-            <div className="p-5 relative flex flex-col border border-gray-200 rounded-md bg-[#F2F2F2]">
+            <div className="p-5 relative flex  flex-col border border-gray-200 rounded-md bg-[#F2F2F2]">
 
              
-              <div className='absolute top-3 right-3 flex gap-2 bg-white rounded-md p-1 border border-gray-200'>
+              <div className='absolute items-center top-0 right-0 flex gap-1 px-1 bg-white rounded-md  border border-gray-200'>
                 <button
                   className="text-yellow-400 cursor-pointer"
                   onClick={() => toggleFavorite(post.id)}
                 >
-                  {post.favorite ? <FaStar size={22} /> : <FaRegStar size={22} className="text-black" />}
+                  {post.favorite ? <FaStar size={15} /> : <FaRegStar size={15} className="text-black" />}
                 </button>
+
+              <p>|</p>
 
                 {/* ✅ Updated: Using Menu component */}
                 <Menu selectedPost={post}/>

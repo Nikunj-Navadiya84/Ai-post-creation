@@ -29,16 +29,16 @@ const Menu = ({ selectedPost, onDelete }) => {
     };
 
     return (
-        <div className="relative inline-block" ref={menuRef}>
+        <div className="relative inline-block items-center" ref={menuRef}>
             <button
                 onClick={() => setOpen((prev) => !prev)}
-                className="p-2 rounded-full hover:bg-gray-100 focus:outline-none cursor-pointer"
+                className="flex items-center rounded-full hover:bg-gray-100 focus:outline-none cursor-pointer"
             >
                 <FiMoreHorizontal size={22} />
             </button>
 
             {open && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg z-50 py-2">
+                <div className="absolute right-[-20] mt-2 w-56 bg-white rounded-xl shadow-lg z-50 py-2">
 
                     <Link to="/postReady" state={{ selectedPost }}>
                         <button className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100">
