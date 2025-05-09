@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
+import axios from "axios";
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,6 +16,14 @@ const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // If the user is already logged in, redirect to home
+      navigate("/home");
+    }
+  }, [navigate]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -22,11 +32,28 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    // Add login logic here
-    navigate("/home"); // Navigate to home page after login
+
+    try {
+      const response = await axios.post("http://localhost:4000/api/user/login", {
+        email: formData.username,
+        password: formData.password,
+      });
+
+      const { token } = response.data;
+      localStorage.setItem("token", token);
+
+      toast.success("Login successful!");
+
+      navigate("/home");
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Login failed. Please try again.");
+      }
+    }
   };
 
   return (
@@ -51,14 +78,14 @@ const Login = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="mb-3">
-            <label className="block text-gray-700 mb-1">Username</label>
+            <label className="block text-gray-700 mb-1">UserEmail</label>
             <input
               type="text"
               name="username"
               value={formData.username}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm"
-              placeholder="Username"
+              placeholder="UserEmail"
               required
             />
           </div>
