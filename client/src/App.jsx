@@ -12,14 +12,16 @@ import SideBar from './components/SideBar'
 import NavBar from './components/NavBar'
 import GeneratedContent from './pages/GeneratedContent'
 import PostReady from './components/PostReady'
+import ProtectedRoute from './routes/ProtectedRoute';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const LayoutRoutes = ['/home', '/generatedcontent','/postready']
+const LayoutRoutes = ['/home', '/generatedcontent', '/postready']
 
 function AppLayout() {
   const location = useLocation()
   const showLayout = LayoutRoutes.includes(location.pathname.toLowerCase())
+  const token = localStorage.getItem('token');
 
   return (
     <div className='flex'>
@@ -34,9 +36,9 @@ function AppLayout() {
           <Route path="/checkYourEmail" element={<CheckYourEmail />} />
           <Route path="/setNewPassword" element={<SetNewPassword />} />
           <Route path="/passwordReset" element={<PasswordReset />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/generatedcontent" element={<GeneratedContent />} />
-          <Route path="/postReady" element={<PostReady />} />
+          <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/generatedcontent" element={<ProtectedRoute><GeneratedContent /></ProtectedRoute>} />
+          <Route path="/postReady" element={<ProtectedRoute><PostReady /></ProtectedRoute>} />
         </Routes>
       </div>
       <ToastContainer />

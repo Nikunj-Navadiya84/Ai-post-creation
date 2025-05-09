@@ -48,7 +48,7 @@ const Login = () => {
 
       navigate("/home");
     } catch (error) {
-      if (error.response) {
+      if (error.response && error.response.data && error.response.data.message) {
         toast.error(error.response.data.message);
       } else {
         toast.error("Login failed. Please try again.");
@@ -80,7 +80,7 @@ const Login = () => {
           <div className="mb-3">
             <label className="block text-gray-700 mb-1">UserEmail</label>
             <input
-              type="text"
+              type="email"
               name="username"
               value={formData.username}
               onChange={handleChange}
