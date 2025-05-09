@@ -1,4 +1,4 @@
-import { createContext, useState , useEffect} from "react";
+import { createContext, useState, useEffect } from "react";
 export const StoreContext = createContext();
 import assets from '../assets/assets';
 
@@ -40,15 +40,15 @@ export const ShopContextProvider = ({ children }) => {
         address: newBizAddress,
         logo: logoURL,
       };
-  
+
       const updatedBusinesses = [...businesses, newBusiness];
-  
+
       // Update state
       setBusinesses(updatedBusinesses);
-  
+
       // Store in localStorage
       localStorage.setItem('businesses', JSON.stringify(updatedBusinesses));
-  
+
       // Reset form
       setNewBizName('');
       setNewBizAddress('');
@@ -57,14 +57,14 @@ export const ShopContextProvider = ({ children }) => {
       setIsModalOpen(false);
     }
   };
-  
+
   useEffect(() => {
     const storedBusinesses = localStorage.getItem('businesses');
     if (storedBusinesses) {
       setBusinesses(JSON.parse(storedBusinesses));
     }
   }, []);
-  
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -389,11 +389,11 @@ export const ShopContextProvider = ({ children }) => {
               {/* Generate Button */}
               <button
                 type="submit"
-                className={`text-white py-2 w-full rounded-md transition-colors duration-200 ${businessName && logoURL && postDescription
+                className={`text-white py-2 w-full rounded-md transition-colors duration-200 ${businessName && postDescription
                   ? 'bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] cursor-pointer'
                   : 'bg-gray-300 cursor-not-allowed'
                   }`}
-                disabled={!businessName  || !postDescription}
+                disabled={!businessName || !postDescription}
               >
                 Generate
               </button>
