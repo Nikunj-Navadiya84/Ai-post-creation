@@ -1,21 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Navbar = () => {
+  const [userName, setUserName] = useState("");
 
-    return (
-        <div className="main-header-container sticky top-0 p-4 flex justify-between items-center bg-white shadow-md z-50">
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await axios.get("http://localhost:4000/api/user/users", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUserName(res.data.LoginUserName);
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      }
+    };
 
-            <div>
-                <h1 className="text-lg font-semibold">Logo</h1>
-            </div>
+    fetchUser();
+  }, []);
 
-            <div>
-                <p className="text-lg">UserName</p>
-            </div>
-
-        </div>
-
-    );
+  return (
+    <div className="main-header-container sticky top-0 py-4 px-10 flex justify-between items-center bg-white shadow-md z-50">
+      <div>
+        <h1 className="text-lg font-semibold">Adwhiz</h1>
+      </div>
+      <div>
+        <p className="text-lg">{userName || "Loading..."}</p>
+      </div>
+    </div>
+  );
 };
 
 export default Navbar;
