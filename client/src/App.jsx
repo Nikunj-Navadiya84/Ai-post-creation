@@ -12,6 +12,8 @@ import SideBar from './components/SideBar'
 import NavBar from './components/NavBar'
 import GeneratedContent from './pages/GeneratedContent'
 import PostReady from './components/PostReady'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LayoutRoutes = ['/home', '/generatedcontent','/postready']
 
@@ -37,6 +39,7 @@ function AppLayout() {
           <Route path="/postReady" element={<PostReady />} />
         </Routes>
       </div>
+      <ToastContainer />
     </div>
   )
 }

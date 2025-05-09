@@ -3,6 +3,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -24,16 +26,26 @@ const SignUp = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
-
-        // Optional: Add validation for password match
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match!");
+            toast.error("Passwords do not match!");
             return;
         }
-        navigate("/collectInformation");
+        try {
+            const response = await axios.post("http://localhost:4000/api/user/signup", {
+                name: formData.username,
+                email: formData.email,
+                password: formData.password,
+                confirmPassword: formData.confirmPassword,
+            });
+
+            navigate("/collectInformation");
+
+        } catch (error) {
+            console.error("Signup error:", error);
+            toast.error(error.response?.data?.message || "An error occurred during signup.");
+        }
     };
 
     return (
