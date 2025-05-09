@@ -5,11 +5,15 @@ const User = require("../models/User");
 // Signup user
 exports.signup = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: "Passwords do not match" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -21,6 +25,7 @@ exports.signup = async (req, res) => {
     res.status(500).json({ message: "Error registering user" });
   }
 };
+
 
 // Login user
 exports.login = async (req, res) => {
