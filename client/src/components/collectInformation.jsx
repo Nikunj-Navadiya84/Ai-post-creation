@@ -1,42 +1,57 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
-import { StoreContext } from "../Context/StoreContext";
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const CollectInformation = () => {
     const navigate = useNavigate();
-    const { isModalOpen, setIsModalOpen, businesses, setBusinesses, newBizName, setNewBizName, newBizAddress, setNewBizAddress, logoURL, setLogoURL, selectedImage, setSelectedImage, } = useContext(StoreContext);
+    const [businessName, setBusinessName] = useState('');
+    const [businessAddress, setBusinessAddress] = useState('');
+    const [logoFile, setLogoFile] = useState(null);
+    const [previewImage, setPreviewImage] = useState('');
 
-    const handleSubmit = (e) => {
+
+    // Submit new business post
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (newBizName && logoURL) {
-            const newBusiness = {
-                id: businesses.length + 1,
-                name: newBizName,
-                address: newBizAddress,
-                logo: logoURL,
-            };
-            setBusinesses([...businesses, newBusiness]);
-            setNewBizName('');
-            setNewBizAddress('');
-            setSelectedImage(null);
-            setLogoURL('');
-            setIsModalOpen(false);
-            navigate("/home");
+        try {
+            const token = localStorage.getItem('token');
+            const formData = new FormData();
+            formData.append('name', businessName);
+            formData.append('address', businessAddress);
+            formData.append('image', logoFile);
+
+            const response = await axios.post(
+                'http://localhost:4000/api/post/add',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (response.data.success) {
+                toast.success('Business added successfully!');
+                setIsModalOpen(false);
+                setBusinessName('');
+                setBusinessAddress('');
+                setLogoFile(null);
+                setPreviewImage('');
+                fetchPosts();
+                navigate('/');
+            } else {
+                toast.error(`Failed to add business: ${response.data.message}`);
+                console.error('Failed to add business:', response.data.message);
+            }
+        } catch (error) {
+            toast.error('Something went wrong. Please try again.');
+            console.error('Submit error:', error);
         }
     };
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setSelectedImage(file);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setLogoURL(reader.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
 
     return (
         <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
@@ -56,34 +71,33 @@ const CollectInformation = () => {
                     Add your business details to continue.
                 </p>
 
-                <form onSubmit={handleSubmit} className='p-6'>
-
+                <form onSubmit={handleSubmit} className="p-6">
                     {/* Business Name */}
                     <div className="mb-2">
                         <label className="block text-gray-700 mb-1 text-sm">Business Name</label>
                         <input
                             type="text"
-                            value={newBizName}
-                            onChange={(e) => setNewBizName(e.target.value)}
+                            value={businessName}
+                            onChange={(e) => setBusinessName(e.target.value)}
                             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm"
                             placeholder="Name"
                             required
                         />
                     </div>
 
-                    {/* Business Address */}
+                    {/* Address */}
                     <div className="mb-2">
                         <label className="block text-gray-700 mb-1 text-sm">Business Address</label>
                         <textarea
-                            value={newBizAddress}
-                            onChange={(e) => setNewBizAddress(e.target.value)}
+                            value={businessAddress}
+                            onChange={(e) => setBusinessAddress(e.target.value)}
                             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300 text-sm"
                             placeholder="Address"
                             required
                         />
                     </div>
 
-                    {/* Logo / Banner Image */}
+                    {/* Upload Image */}
                     <div className="mb-6">
                         <label className="block text-gray-700 mb-1 text-sm">Logo / Banner Image</label>
                         <div className="border border-gray-300 border-dashed rounded-md p-6 text-center text-sm">
@@ -94,14 +108,19 @@ const CollectInformation = () => {
                                     className="w-10 h-10 mb-2 opacity-70"
                                 />
                                 <p className="text-gray-600 mb-2 text-sm">
-                                    Drag and drop an logo or image to upload
+                                    Drag and drop or browse to upload
                                 </p>
+
                                 <input
                                     type="file"
                                     accept="image/png, image/jpeg"
-                                    onChange={handleImageChange}
                                     className="hidden"
                                     id="file-upload"
+                                    onChange={(e) => {
+                                        const file = e.target.files[0];
+                                        setLogoFile(file);
+                                        setPreviewImage(URL.createObjectURL(file));
+                                    }}
                                 />
                                 <label
                                     htmlFor="file-upload"
@@ -110,24 +129,27 @@ const CollectInformation = () => {
                                     Upload
                                 </label>
                                 <p className="text-sm text-gray-500 mt-2">supported formats: JPG, PNG</p>
+
+                                {previewImage && (
+                                    <img
+                                        src={previewImage}
+                                        alt="Preview"
+                                        className="w-full max-h-48 object-contain rounded-lg shadow-md"
+                                    />
+                                )}
+
+
                             </div>
-                            {selectedImage && (
-                                <p className="mt-2 text-green-600 text-sm">Selected: {selectedImage.name}</p>
-                            )}
                         </div>
                     </div>
 
-                    {/* Submit Button */}
+                    {/* Submit */}
                     <button
-                type="submit"
-                className={`text-white py-2 w-full rounded-md transition-colors duration-200 ${newBizName && logoURL && newBizAddress
-                  ? 'bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] cursor-pointer'
-                  : 'bg-gray-300 cursor-not-allowed'
-                  }`}
-                disabled={!newBizName || !logoURL || !newBizAddress}
-              >
-                Save Business Information
-              </button>
+                        type="submit"
+                        className="text-white py-2 w-full rounded-md transition-colors duration-200 bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] cursor-pointer"
+                    >
+                        Save Business Information
+                    </button>
                 </form>
             </div>
         </div>
