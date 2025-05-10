@@ -11,12 +11,23 @@ const CollectInformation = () => {
     const [logoFile, setLogoFile] = useState(null);
     const [previewImage, setPreviewImage] = useState('');
 
-
-    // Submit new business post
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const token = localStorage.getItem('token');
+
+        // Check token presence
+        if (!token) {
+            toast.error('You must be logged in to add a business.');
+            return;
+        }
+
+        // Validate image file
+        if (logoFile && !['image/jpeg', 'image/png'].includes(logoFile.type)) {
+            toast.error('Only JPG and PNG images are supported.');
+            return;
+        }
+
         try {
-            const token = localStorage.getItem('token');
             const formData = new FormData();
             formData.append('name', businessName);
             formData.append('address', businessAddress);
@@ -35,23 +46,21 @@ const CollectInformation = () => {
 
             if (response.data.success) {
                 toast.success('Business added successfully!');
-                setIsModalOpen(false);
+                // Clear form
                 setBusinessName('');
                 setBusinessAddress('');
                 setLogoFile(null);
                 setPreviewImage('');
-                fetchPosts();
                 navigate('/');
             } else {
                 toast.error(`Failed to add business: ${response.data.message}`);
-                console.error('Failed to add business:', response.data.message);
+                console.error('Add business error:', response.data.message);
             }
         } catch (error) {
             toast.error('Something went wrong. Please try again.');
             console.error('Submit error:', error);
         }
     };
-
 
     return (
         <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
@@ -62,7 +71,6 @@ const CollectInformation = () => {
                     backgroundBlendMode: "overlay",
                 }}
             />
-
             <div className="relative z-10 bg-white rounded-lg shadow-xl p-10 w-full max-w-lg">
                 <h1 className="text-4xl font-semibold text-center text-gray-800 mb-2">
                     Collect Information
@@ -118,8 +126,10 @@ const CollectInformation = () => {
                                     id="file-upload"
                                     onChange={(e) => {
                                         const file = e.target.files[0];
-                                        setLogoFile(file);
-                                        setPreviewImage(URL.createObjectURL(file));
+                                        if (file) {
+                                            setLogoFile(file);
+                                            setPreviewImage(URL.createObjectURL(file));
+                                        }
                                     }}
                                 />
                                 <label
@@ -128,17 +138,15 @@ const CollectInformation = () => {
                                 >
                                     Upload
                                 </label>
-                                <p className="text-sm text-gray-500 mt-2">supported formats: JPG, PNG</p>
+                                <p className="text-sm text-gray-500 mt-2">Supported formats: JPG, PNG</p>
 
                                 {previewImage && (
                                     <img
                                         src={previewImage}
                                         alt="Preview"
-                                        className="w-full max-h-48 object-contain rounded-lg shadow-md"
+                                        className="w-full max-h-48 object-contain rounded-lg shadow-md mt-4"
                                     />
                                 )}
-
-
                             </div>
                         </div>
                     </div>

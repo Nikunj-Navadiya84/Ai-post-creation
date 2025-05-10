@@ -42,6 +42,12 @@ const SignUp = () => {
                 confirmPassword: formData.confirmPassword,
             });
 
+            const token = response.data.token;
+
+            if (token) {
+                localStorage.setItem("token", token); // Store token locally
+            }
+
             navigate("/collectInformation");
 
         } catch (error) {
@@ -52,15 +58,24 @@ const SignUp = () => {
 
     const handleGoogleCallback = async (response) => {
         try {
-            await axios.post("http://localhost:4000/api/user/google-auth", {
-                token: response.credential,
+            const token = response.credential;
+            localStorage.setItem("token", token);  // Store the token in localStorage
+
+            const res = await axios.post("http://localhost:4000/api/user/google-auth", {
+                token,
             });
-            toast.success("Signed up with Google!");
-            navigate("/collectInformation");
+
+            if (res.status === 200) {
+                toast.success("Signed up with Google!");
+                navigate("/collectInformation");  // Navigate to the next page
+            }
         } catch (error) {
+            console.error("Google sign-up failed:", error);  // Log error for debugging
             toast.error("Google sign-up failed.");
         }
     };
+
+
 
     useEffect(() => {
         if (window.google) {

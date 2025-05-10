@@ -9,30 +9,57 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 exports.signup = async (req, res) => {
   try {
     const { name, email, password, confirmPassword } = req.body;
-    const existingUser = await User.findOne({ email });
 
+    // Check for missing fields
+    if (!name || !email || !password || !confirmPassword) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
+    // Check if passwords match
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Passwords do not match" });
     }
 
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create new user
     const user = new User({ name, email, password: hashedPassword });
     await user.save();
 
-    res.status(201).json({ message: "User created successfully" });
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET || "your_jwt_secret_key",
+      { expiresIn: "90d" }
+    );
+
+    // Respond with user data and token
+    res.status(201).json({
+      message: "User created successfully",
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    });
   } catch (error) {
+    console.error("Signup Error:", error);
     res.status(500).json({ message: "Error registering user" });
   }
 };
 
 
+
 exports.googleAuth = async (req, res) => {
   try {
-    // Check if the token is provided
     const { token } = req.body;
     if (!token) {
       return res.status(400).json({ message: "Token is required" });
@@ -48,16 +75,24 @@ exports.googleAuth = async (req, res) => {
 
     let user = await User.findOne({ email });
     if (!user) {
-      user = new User({ name, email, password: "GOOGLE_AUTH" });
+      user = new User({ name, email, password: "GOOGLE_AUTH" });  // Make sure to handle password better
       await user.save();
     }
 
-    res.status(200).json({ message: "Google Auth Success", user });
+    const jwtToken = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '90h' }
+    );
+
+    res.status(200).json({ message: "Google Auth Success", user, token: jwtToken });
   } catch (error) {
-    console.error('Google authentication failed:', error); // Log the error
+    console.error('Google authentication failed:', error);  // Log error for debugging
     res.status(400).json({ message: "Google authentication failed", error });
   }
 };
+
+
 
 
 
