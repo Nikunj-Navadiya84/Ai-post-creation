@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/signup", signup);
 router.post("/google-auth", googleAuth);
 router.post("/login", login);
-router.post("/google-auth", googleLogin);
+router.post("/google-login", googleLogin);
 router.get('/users', userMiddleware, users);
 router.post('/changepassword', userMiddleware, changepassword);
 

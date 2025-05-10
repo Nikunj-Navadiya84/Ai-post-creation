@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from "jwt-decode"; // ✅ updated import
 import assets from "../assets/assets";
 import axios from "axios";
 import { toast } from 'react-toastify';
+
+const GOOGLE_CLIENT_ID = "243296692558-qum4tqa4lp9oqs2kfms6rhnh4odac6r2.apps.googleusercontent.com";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,10 +19,32 @@ const Login = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/home");
-    }
+    if (token) navigate("/home");
+
+    const initializeGoogle = () => {
+      if (window.google && window.google.accounts) {
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleGoogleLoginSuccess,
+        });
+        window.google.accounts.id.renderButton(
+          document.getElementById("google-signin-button"),
+          {
+            theme: "outline",
+            size: "large",
+            type: "standard",
+            shape: "pill",
+            logo_alignment: "center",
+          }
+        );
+      } else {
+        setTimeout(initializeGoogle, 300);
+      }
+    };
+
+    initializeGoogle();
   }, [navigate]);
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -51,16 +72,18 @@ const Login = () => {
 
   const handleGoogleLoginSuccess = async (credentialResponse) => {
     try {
-      const decoded = jwtDecode(credentialResponse.credential);
-      const res = await axios.post("http://localhost:4000/api/user/google-auth", {
-        token: credentialResponse.credential,
+      const token = credentialResponse.credential;
+      if (!token) throw new Error("Google token not found");
+
+      const res = await axios.post("http://localhost:4000/api/user/google-login", {
+        token: token,
       });
 
       localStorage.setItem("token", res.data.token);
       toast.success("Google login successful!");
       navigate("/home");
     } catch (err) {
-      toast.error("Google login failed.");
+      toast.error("Google login failed: " + err.message);
     }
   };
 
@@ -74,9 +97,7 @@ const Login = () => {
         }}
       />
       <div className="relative z-10 bg-white rounded-lg shadow-xl p-10 w-full max-w-lg">
-        <h1 className="text-4xl font-semibold text-center text-gray-800 mb-2">
-          Login
-        </h1>
+        <h1 className="text-4xl font-semibold text-center text-gray-800 mb-2">Login</h1>
         <p className="text-center text-gray-600 mb-5 text-sm">
           Please enter your login details to log in.
         </p>
@@ -139,25 +160,15 @@ const Login = () => {
           </button>
 
           <div className="relative flex items-center justify-center text-sm text-gray-500 mb-3">
-            <div className="border-t border-gray-300 flex-grow "></div>
+            <div className="border-t border-gray-300 flex-grow"></div>
             <span className="px-4">or continue with</span>
             <div className="border-t border-gray-300 flex-grow"></div>
           </div>
 
-          <div className="w-full flex justify-center mt-4">
-            <div className="w-full max-w">
-              <GoogleLogin
-                onSuccess={handleGoogleLoginSuccess}
-                onError={() => toast.error("Google login failed")}
-                theme="outline"
-                size="large"
-                type="standard"
-                shape="pill"
-                logo_alignment="center"
-              />
-            </div>
+          <div className="flex justify-center">
+            <div id="google-signin-button" />
           </div>
-          
+
           <p className="text-center text-sm text-gray-600 mt-4">
             Don't have an account?
             <a href="/signup" className="text-gray-700 font-semibold ml-1">

@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { OAuth2Client } = require("google-auth-library");
 
-
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Signup user
@@ -30,13 +29,20 @@ exports.signup = async (req, res) => {
   }
 };
 
+
 exports.googleAuth = async (req, res) => {
   try {
+    // Check if the token is provided
     const { token } = req.body;
+    if (!token) {
+      return res.status(400).json({ message: "Token is required" });
+    }
+
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
+
     const payload = ticket.getPayload();
     const { email, name } = payload;
 
@@ -48,9 +54,12 @@ exports.googleAuth = async (req, res) => {
 
     res.status(200).json({ message: "Google Auth Success", user });
   } catch (error) {
+    console.error('Google authentication failed:', error); // Log the error
     res.status(400).json({ message: "Google authentication failed", error });
   }
 };
+
+
 
 // Login user
 exports.login = async (req, res) => {
@@ -79,10 +88,16 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.googleLogin = async (req, res) => {
-  const { token } = req.body;
 
+
+// Google Login user
+exports.googleLogin = async (req, res) => {
   try {
+    const { token } = req.body;
+    if (!token) {
+      return res.status(400).json({ message: "Token is required" });
+    }
+
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.GOOGLE_CLIENT_ID,
@@ -94,23 +109,29 @@ exports.googleLogin = async (req, res) => {
     let user = await User.findOne({ email });
 
     if (!user) {
-      user = await User.create({
+      user = new User({
         name,
         email,
-        password: null,
-        authType: "google",
+        password: null, // Optional: use 'null' for Google users
+        isGoogleUser: true,
       });
+      await user.save();
     }
 
-    const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "90d",
-    });
+    const jwtToken = jwt.sign(
+      { id: user._id, name: user.name },
+      process.env.JWT_SECRET,
+      { expiresIn: "90d" }
+    );
 
-    res.status(200).json({ token: jwtToken });
-  } catch (err) {
-    res.status(401).json({ message: "Invalid Google token." });
+    res.status(200).json({ message: "Google Login Success", token: jwtToken, user });
+  } catch (error) {
+    console.error("Google login failed:", error);
+    res.status(400).json({ message: "Google login failed", error: error.message });
   }
 };
+
+
 
 // Fetch users
 exports.users = async (req, res) => {
@@ -132,6 +153,7 @@ exports.users = async (req, res) => {
     });
   }
 };
+
 
 // Change password
 exports.changepassword = async (req, res) => {
