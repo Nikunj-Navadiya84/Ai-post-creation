@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode"; // ✅ updated import
 import assets from "../assets/assets";
 import axios from "axios";
 import { toast } from 'react-toastify';
@@ -19,7 +21,6 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      // If the user is already logged in, redirect to home
       navigate("/home");
     }
   }, [navigate]);
@@ -34,31 +35,37 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post("http://localhost:4000/api/user/login", {
         email: formData.username,
         password: formData.password,
       });
-
       const { token } = response.data;
       localStorage.setItem("token", token);
-
       toast.success("Login successful!");
-
       navigate("/home");
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error("Login failed. Please try again.");
-      }
+      toast.error(error.response?.data?.message || "Login failed.");
+    }
+  };
+
+  const handleGoogleLoginSuccess = async (credentialResponse) => {
+    try {
+      const decoded = jwtDecode(credentialResponse.credential);
+      const res = await axios.post("http://localhost:4000/api/user/google-auth", {
+        token: credentialResponse.credential,
+      });
+
+      localStorage.setItem("token", res.data.token);
+      toast.success("Google login successful!");
+      navigate("/home");
+    } catch (err) {
+      toast.error("Google login failed.");
     }
   };
 
   return (
     <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
-      {/* Background gradient + image */}
       <div
         className="absolute inset-0 bg-cover bg-center z-0"
         style={{
@@ -66,8 +73,6 @@ const Login = () => {
           backgroundBlendMode: "overlay",
         }}
       />
-
-      {/* Login Form */}
       <div className="relative z-10 bg-white rounded-lg shadow-xl p-10 w-full max-w-lg">
         <h1 className="text-4xl font-semibold text-center text-gray-800 mb-2">
           Login
@@ -75,9 +80,8 @@ const Login = () => {
         <p className="text-center text-gray-600 mb-5 text-sm">
           Please enter your login details to log in.
         </p>
-
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="mb-3">
+          <div>
             <label className="block text-gray-700 mb-1">UserEmail</label>
             <input
               type="email"
@@ -89,8 +93,7 @@ const Login = () => {
               required
             />
           </div>
-
-          <div className="mb-3">
+          <div>
             <label className="block text-gray-700 mb-1">Password</label>
             <div className="relative">
               <input
@@ -119,7 +122,7 @@ const Login = () => {
                 name="rememberMe"
                 checked={formData.rememberMe}
                 onChange={handleChange}
-                className="h-4 w-4 border-gray-300 rounded mr-2 cursor-pointer"
+                className="h-4 w-4 mr-2"
               />
               Remember Me
             </label>
@@ -130,7 +133,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white py-2 rounded-md  transition-colors duration-200 cursor-pointer mb-3"
+            className="w-full bg-gradient-to-b from-[#ff9a9e] to-[#ff6666] text-white py-2 rounded-md"
           >
             Login
           </button>
@@ -141,20 +144,23 @@ const Login = () => {
             <div className="border-t border-gray-300 flex-grow"></div>
           </div>
 
-          <button
-            type="button"
-            className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2 hover:bg-gray-50 transition-colors duration-200 cursor-pointer mb-3"
-          >
-            <FcGoogle size={20} />
-            <span>Sign up with Google</span>
-          </button>
-
+          <div className="w-full flex justify-center mt-4">
+            <div className="w-full max-w">
+              <GoogleLogin
+                onSuccess={handleGoogleLoginSuccess}
+                onError={() => toast.error("Google login failed")}
+                theme="outline"
+                size="large"
+                type="standard"
+                shape="pill"
+                logo_alignment="center"
+              />
+            </div>
+          </div>
+          
           <p className="text-center text-sm text-gray-600 mt-4">
             Don't have an account?
-            <a
-              href="/signup"
-              className="text-gray-700 font-semibold ml-1 "
-            >
+            <a href="/signup" className="text-gray-700 font-semibold ml-1">
               Sign up
             </a>
           </p>

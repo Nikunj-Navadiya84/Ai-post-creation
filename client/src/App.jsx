@@ -15,6 +15,7 @@ import PostReady from './components/PostReady'
 import ProtectedRoute from './routes/ProtectedRoute';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const LayoutRoutes = ['/home', '/generatedcontent', '/postready']
 
@@ -24,6 +25,7 @@ function AppLayout() {
 
   return (
     <div className='flex'>
+      <GoogleOAuthProvider clientId="243296692558-qum4tqa4lp9oqs2kfms6rhnh4odac6r2.apps.googleusercontent.com">
       {showLayout && <SideBar />}
       <div className='flex-1'>
         {showLayout && <NavBar />}
@@ -41,6 +43,7 @@ function AppLayout() {
         </Routes>
       </div>
       <ToastContainer />
+      </GoogleOAuthProvider>
     </div>
   )
 }

@@ -31,25 +31,25 @@ exports.signup = async (req, res) => {
 };
 
 exports.googleAuth = async (req, res) => {
-    try {
-        const { token } = req.body;
-        const ticket = await client.verifyIdToken({
-            idToken: token,
-            audience: process.env.GOOGLE_CLIENT_ID,
-        });
-        const payload = ticket.getPayload();
-        const { email, name } = payload;
+  try {
+    const { token } = req.body;
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { email, name } = payload;
 
-        let user = await User.findOne({ email });
-        if (!user) {
-            user = new User({ name, email, password: "GOOGLE_AUTH" });
-            await user.save();
-        }
-
-        res.status(200).json({ message: "Google Auth Success", user });
-    } catch (error) {
-        res.status(400).json({ message: "Google authentication failed", error });
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = new User({ name, email, password: "GOOGLE_AUTH" });
+      await user.save();
     }
+
+    res.status(200).json({ message: "Google Auth Success", user });
+  } catch (error) {
+    res.status(400).json({ message: "Google authentication failed", error });
+  }
 };
 
 // Login user
@@ -76,6 +76,39 @@ exports.login = async (req, res) => {
     res.json({ token });
   } catch (error) {
     res.status(500).json({ message: "Login failed" });
+  }
+};
+
+exports.googleLogin = async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const { email, name } = payload;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name,
+        email,
+        password: null,
+        authType: "google",
+      });
+    }
+
+    const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "90d",
+    });
+
+    res.status(200).json({ token: jwtToken });
+  } catch (err) {
+    res.status(401).json({ message: "Invalid Google token." });
   }
 };
 
@@ -160,3 +193,6 @@ exports.changepassword = async (req, res) => {
     });
   }
 };
+
+
+
