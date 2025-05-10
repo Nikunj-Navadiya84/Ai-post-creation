@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
 import axios from "axios";
 import { toast } from "react-toastify";
+
+const GOOGLE_CLIENT_ID = "243296692558-qum4tqa4lp9oqs2kfms6rhnh4odac6r2.apps.googleusercontent.com";
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -47,6 +49,37 @@ const SignUp = () => {
             toast.error(error.response?.data?.message || "An error occurred during signup.");
         }
     };
+
+    const handleGoogleCallback = async (response) => {
+        try {
+            await axios.post("http://localhost:4000/api/user/google-auth", {
+                token: response.credential,
+            });
+            toast.success("Signed up with Google!");
+            navigate("/collectInformation");
+        } catch (error) {
+            toast.error("Google sign-up failed.");
+        }
+    };
+
+    useEffect(() => {
+        if (window.google) {
+            window.google.accounts.id.initialize({
+                client_id: GOOGLE_CLIENT_ID,
+                callback: handleGoogleCallback,
+            });
+            window.google.accounts.id.renderButton(
+                document.getElementById("googleSignUpDiv"),
+                {
+                    theme: "outline",
+                    size: "large",
+                    type: "standard",
+                    shape: "pill",
+                    logo_alignment: "center",
+                }
+            );
+        }
+    }, []);
 
     return (
         <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
@@ -169,13 +202,13 @@ const SignUp = () => {
                         <div className="border-t border-gray-300 flex-grow"></div>
                     </div>
 
-                    <button
-                        type="button"
-                        className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-md py-2 hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
-                    >
-                        <FcGoogle size={20} />
-                        <span>Sign up with Google</span>
-                    </button>
+                    <div className="flex">
+                        <div
+                            id="googleSignUpDiv"
+                            className="max-w rounded-lg "
+                        ></div>
+                    </div>
+
                 </form>
             </div>
         </div>
